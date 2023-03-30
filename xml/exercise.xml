@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" ending="utf-8" ?>
+<!--以上是xml文件的声明-->
+
+<!--图书信息-->
+<books><!--表示多个图书信息-->
+    <book sn="SN1"><!--book表示一个图书信息，sn表示图书序列号-->
+        <name>时间简史</name><!--书名-->
+        <author>霍金</author><!--作者-->
+        <price>55</price><!--图书价格-->
+    </book>
+    <book sn="SN2"><!--book表示一个图书信息，sn表示图书序列号-->
+        <name>高效</name><!--书名-->
+        <author>金</author><!--作者-->
+        <price>5</price><!--图书价格-->
+    </book>
+</books>
+
