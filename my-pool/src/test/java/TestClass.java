@@ -8,8 +8,11 @@ import lombok.experimental.Accessors;
 import org.apache.commons.lang3.StringUtils;
 import org.junit.Test;
 
-import java.io.Serializable;
+import javax.swing.text.StyledEditorKit;
+import java.io.*;
 import java.sql.SQLOutput;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.concurrent.ForkJoinPool;
 import java.util.stream.Collectors;
@@ -144,9 +147,14 @@ public class TestClass {
 
 
     }
+
+    /**
+     * 空集合测试类
+     */
     @Test
     public void LongListTest(){
         List<Long> ids = new ArrayList<>();
+        List<Long> newId = new ArrayList<>();
 //        ids.add(1123L);
 //        ids.add(1123L);
 //        ids.add(112L);
@@ -157,8 +165,17 @@ public class TestClass {
 //            Long dsId = ids.stream().distinct().collect(Collectors.toList()).get(0);
 //            System.out.println(dsId);
 //        }
-        String string = JSON.toJSONString(ids);
-        System.out.println(string);
+        System.out.println("空集合的size大小"+ids.size());
+
+        for (Long id : ids) {
+            newId.add(id);
+        }
+
+        String string = JSON.toJSONString(newId);
+        System.out.println("空集合复制给空集合" + string);
+        
+//        String string = JSON.toJSONString(ids);
+//        System.out.println(string);
 
     }
     @Test
@@ -1244,5 +1261,53 @@ public class TestClass {
 
     }
 
+    @Test
+    public void dateTest(){
+        Calendar date = Calendar.getInstance();
+        String year = String.valueOf(date.get(Calendar.YEAR));
+        System.out.println(year);
+    }
+
+    @Test
+    public void fileReaderTest() throws IOException {
+        FileReader fr = null;
+        List<String> list = new ArrayList<>();
+        try {
+            fr = new FileReader("E:\\IdeaProjects\\train\\my-pool\\src\\test\\java\\fileReader.txt");
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        BufferedReader br = new BufferedReader(fr);
+        String line = br.readLine();
+        int begin = 0;
+        list.add("(" + line + ")");
+        br.close();
+        fr.close();
+        list.stream().forEach(System.out::println);
+
+    }
+
+    @Test
+    public void StringToDatetest() throws ParseException {
+        Map<String,Object> map = new HashMap<>();
+        map.put("SENDTIME",null);
+        String sendTime = map.get("SENDTIME") == null ? "null" : String.valueOf(map.get("SENDTIME"));
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Date sendDate = sdf.parse(sendTime);
+        System.out.println(sendDate.toString());
+    }
+
+    @Test
+    public void ObjectTojsonstr(){
+        DataServiceByBlood dataServiceByBlood = new DataServiceByBlood();
+        dataServiceByBlood.setBloodType(1);
+        dataServiceByBlood.setService_wid(12233L);
+        dataServiceByBlood.setServiceName("测试");
+        String str = JSON.toJSONString(dataServiceByBlood);
+        System.out.println(str);
+        /*
+        * 输出：{"bloodType":1,"serviceName":"测试","service_wid":12233}
+        * */
+    }
 
 }
