@@ -1,0 +1,19 @@
+## 文件夹
+# 忽略out文件下的所有文件
+out/
+logs/
+.DS_Store
+
+# idea文件夹
+.idea/
+target/
+
+## 文件
+# idea文件
+
+# Intellij
+*.iml
+
+
+# Log Files
+*.log

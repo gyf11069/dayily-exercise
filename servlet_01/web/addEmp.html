@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>addEmp.html</title>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+</head>
+<body>
+<!--将指定信息提交到服务器中通过数据库进行保存-->
+<!--如果保存成功，页面显示绿色的添加成功-->
+<h1>添加员工</h1>
+<form action="http://localhost:8080/servlet_01/add" method="get">
+    姓名：<input type="text" name="e_name"><br>
+    性别：<input type="radio" name="e_gender" value="1">男
+    <input type="radio" name="e_gender" value="2">女<br>
+    学历：<select name="e_education">
+    <option value="1">大专</option>
+    <option value="2">本科</option>
+    <option value="3">研究生</option>
+</select><br>
+    兴趣爱好：<input type="checkbox" name="e_hoby" value="1">吃
+    <input type="checkbox" name="e_hoby" value="2">喝
+    <input type="checkbox" name="e_hoby" value="3">玩
+    <input type="checkbox" name="e_hoby" value="4">乐<br>
+    <input type="submit" name="e_hoby" value="添加">
+</form>
+</body>
+</html>
