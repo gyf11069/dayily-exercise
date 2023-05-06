@@ -763,9 +763,15 @@ public class TestClass {
 //          System.out.println(s);
 //          System.out.println(s2);
 
-        String warnType = "/【】";
-        warnType = StringUtils.substringAfter(warnType,"/");
-        System.out.println(warnType);
+//        String warnType = "/【】";
+//        warnType = StringUtils.substringAfter(warnType,"/");
+//        System.out.println(warnType);
+
+
+        String sourceDataObjectName = String.valueOf("所属(sss)");
+        String substringAfter = StringUtils.substringAfter(sourceDataObjectName, "(");
+        String sourceDataObjectStr = StringUtils.substringBefore(substringAfter,")");
+        System.out.println(sourceDataObjectStr);
 
 
     }
@@ -1263,9 +1269,15 @@ public class TestClass {
 
     @Test
     public void dateTest(){
-        Calendar date = Calendar.getInstance();
-        String year = String.valueOf(date.get(Calendar.YEAR));
-        System.out.println(year);
+//        Calendar date = Calendar.getInstance();
+//        String year = String.valueOf(date.get(Calendar.YEAR));
+//        System.out.println(year);
+        /*null的字符串判断*/
+        String l = null;
+        if ("E".equals(l)){
+            System.out.println("字符串为E");
+        }
+        System.out.println("字符串为null");
     }
 
     @Test
@@ -1289,12 +1301,24 @@ public class TestClass {
 
     @Test
     public void StringToDatetest() throws ParseException {
-        Map<String,Object> map = new HashMap<>();
-        map.put("SENDTIME",null);
-        String sendTime = map.get("SENDTIME") == null ? "null" : String.valueOf(map.get("SENDTIME"));
+//        Map<String,Object> map = new HashMap<>();
+//        map.put("SENDTIME",null);
+//        String sendTime = map.get("SENDTIME") == null ? "null" : String.valueOf(map.get("SENDTIME"));
+//        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+//        Date sendDate = sdf.parse(sendTime);
+//        System.out.println(sendDate.toString());
+
+
+        String sendTime = String.valueOf("2023-01-14 10:10:00");
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         Date sendDate = sdf.parse(sendTime);
-        System.out.println(sendDate.toString());
+        Calendar planTime = Calendar.getInstance();
+        planTime.setTime(sendDate);
+        System.out.println(planTime.toString());
+        /*
+        *输出： java.util.GregorianCalendar[time=1673662200000,areFieldsSet=true,areAllFieldsSet=true,lenient=true,zone=sun.util.calendar.ZoneInfo[id="Asia/Shanghai",offset=28800000,dstSavings=0,useDaylight=false,transitions=29,lastRule=null],firstDayOfWeek=1,minimalDaysInFirstWeek=1,ERA=1,YEAR=2023,MONTH=0,WEEK_OF_YEAR=2,WEEK_OF_MONTH=2,DAY_OF_MONTH=14,DAY_OF_YEAR=14,DAY_OF_WEEK=7,DAY_OF_WEEK_IN_MONTH=2,AM_PM=0,HOUR=10,HOUR_OF_DAY=10,MINUTE=10,SECOND=0,MILLISECOND=0,ZONE_OFFSET=28800000,DST_OFFSET=0]
+        * */
+
     }
 
     @Test
@@ -1309,5 +1333,217 @@ public class TestClass {
         * 输出：{"bloodType":1,"serviceName":"测试","service_wid":12233}
         * */
     }
+
+    @Test
+    public void StrTest(){
+//        String S = "JZG";
+//        String[] dataobject = S.split(",");
+//        System.out.println(dataobject[0]);
+
+        List<String> sourceDataObjects = new ArrayList<>();
+        String sourceDataObject = "";
+//        if (data.getSourceDataObject().size() > 0) {
+//            for (Map<String, Object> map : data.getSourceDataObject()) {
+                String sourceDataObjectStr = String.valueOf("dataobject");
+                sourceDataObjects.add(sourceDataObjectStr);
+//            }
+//        }
+        /*获取源头表、字段信息*/
+        if (sourceDataObjects.size() > 0) {
+            /*当只有一个元素dataobject时，输出的内容是：dataobject*/
+            sourceDataObject = sourceDataObjects.stream().map(String::valueOf).collect(Collectors.joining(","));
+        }
+        System.out.println(sourceDataObject);
+
+    }
+
+    @Test
+    public void ListMapInDataObject(){
+        String testStr = " [\n" +
+                "    {\n" +
+                "      \"wid\": \"18355834970903552\",\n" +
+                "      \"database_wid\": \"12679637446445056\",\n" +
+                "      \"dataObject\": \"ods_cjsthdsj\",\n" +
+                "      \"dataField\": \"xxjgdm\",\n" +
+                "      \"dataFieldName\": \"学校机构代码\",\n" +
+                "      \"fieldType\": \"VARCHAR\",\n" +
+                "      \"fieldLength\": \"36\",\n" +
+                "      \"fieldprecision\": null,\n" +
+                "      \"is_pk\": null,\n" +
+                "      \"is_null_able\": null,\n" +
+                "      \"reference_table\": null,\n" +
+                "      \"reference_table_name\": null,\n" +
+                "      \"reference_field\": null,\n" +
+                "      \"reference_field_text\": null,\n" +
+                "      \"reference_field_name\": null,\n" +
+                "      \"foreign_table\": null,\n" +
+                "      \"foreign_table_name\": null,\n" +
+                "      \"foreign_field\": null,\n" +
+                "      \"foreign_field_name\": null,\n" +
+                "      \"dataFieldDesc\": null,\n" +
+                "      \"dataRange\": null,\n" +
+                "      \"open_type\": null,\n" +
+                "      \"share_type\": null,\n" +
+                "      \"standard_field_num\": null,\n" +
+                "      \"quote_standard_field\": null,\n" +
+                "      \"quote_standard_field_num\": null,\n" +
+                "      \"quote_standard_field_name\": null,\n" +
+                "      \"reference_standard\": null,\n" +
+                "      \"status_able\": null,\n" +
+                "      \"order_num\": null,\n" +
+                "      \"creator\": null,\n" +
+                "      \"is_core\": null,\n" +
+                "      \"need_encrypt\": null,\n" +
+                "      \"keep_history\": null,\n" +
+                "      \"code_diff\": null,\n" +
+                "      \"openFields\": null,\n" +
+                "      \"attr_type\": null,\n" +
+                "      \"showFields\": null,\n" +
+                "      \"field_row_num\": null,\n" +
+                "      \"original_field\": null,\n" +
+                "      \"operation\": null,\n" +
+                "      \"modify_time\": null,\n" +
+                "      \"column\": null,\n" +
+                "      \"checkType\": null,\n" +
+                "      \"checkRule\": null,\n" +
+                "      \"checkRuleName\": null,\n" +
+                "      \"mappingDataBases\": [\n" +
+                "        {\n" +
+                "          \"id\": \"S002\",\n" +
+                "          \"sourceDataBaseWid\": \"12678213153639424\",\n" +
+                "          \"sourceDataBaseName\": \"科研系统\",\n" +
+                "          \"dataSource\": \"12678213153639424\"\n" +
+                "        }\n" +
+                "      ],\n" +
+                "      \"mappingDataObject\": [\n" +
+                "        {\n" +
+                "          \"dataobjectname\": \"测试\",\n" +
+                "          \"dataobject\": \"t_test\"\n" +
+                "        }\n" +
+                "      ],\n" +
+                "      \"mappingDataObjectField\": [\n" +
+                "        {\n" +
+                "          \"wid\": \"17294374989520896\",\n" +
+                "          \"datafieldname\": \"c1\",\n" +
+                "          \"database_wid\": \"12678213153639424\",\n" +
+                "          \"datafield\": \"c1\",\n" +
+                "          \"dataobject\": \"t_test\",\n" +
+                "          \"order_num\": \"1\",\n" +
+                "          \"fieldtype\": \"int4\"\n" +
+                "        }\n" +
+                "      ],\n" +
+                "      \"taskMappingWid\": \"19355553762584576\",\n" +
+                "      \"taskWid\": \"19174668581147648\"\n" +
+                "    },\n" +
+                "    {\n" +
+                "      \"wid\": \"18355834970903552\",\n" +
+                "      \"database_wid\": \"12679637446445056\",\n" +
+                "      \"dataObject\": \"ods_cjsthdsj\",\n" +
+                "      \"dataField\": \"xxjgdm\",\n" +
+                "      \"dataFieldName\": \"学校机构代码\",\n" +
+                "      \"fieldType\": \"VARCHAR\",\n" +
+                "      \"fieldLength\": \"36\",\n" +
+                "      \"fieldprecision\": null,\n" +
+                "      \"is_pk\": null,\n" +
+                "      \"is_null_able\": null,\n" +
+                "      \"reference_table\": null,\n" +
+                "      \"reference_table_name\": null,\n" +
+                "      \"reference_field\": null,\n" +
+                "      \"reference_field_text\": null,\n" +
+                "      \"reference_field_name\": null,\n" +
+                "      \"foreign_table\": null,\n" +
+                "      \"foreign_table_name\": null,\n" +
+                "      \"foreign_field\": null,\n" +
+                "      \"foreign_field_name\": null,\n" +
+                "      \"dataFieldDesc\": null,\n" +
+                "      \"dataRange\": null,\n" +
+                "      \"open_type\": null,\n" +
+                "      \"share_type\": null,\n" +
+                "      \"standard_field_num\": null,\n" +
+                "      \"quote_standard_field\": null,\n" +
+                "      \"quote_standard_field_num\": null,\n" +
+                "      \"quote_standard_field_name\": null,\n" +
+                "      \"reference_standard\": null,\n" +
+                "      \"status_able\": null,\n" +
+                "      \"order_num\": null,\n" +
+                "      \"creator\": null,\n" +
+                "      \"is_core\": null,\n" +
+                "      \"need_encrypt\": null,\n" +
+                "      \"keep_history\": null,\n" +
+                "      \"code_diff\": null,\n" +
+                "      \"openFields\": null,\n" +
+                "      \"attr_type\": null,\n" +
+                "      \"showFields\": null,\n" +
+                "      \"field_row_num\": null,\n" +
+                "      \"original_field\": null,\n" +
+                "      \"operation\": null,\n" +
+                "      \"modify_time\": null,\n" +
+                "      \"column\": null,\n" +
+                "      \"checkType\": null,\n" +
+                "      \"checkRule\": null,\n" +
+                "      \"checkRuleName\": null,\n" +
+                "      \"mappingDataBases\": [\n" +
+                "        {\n" +
+                "          \"id\": \"S002\",\n" +
+                "          \"sourceDataBaseWid\": \"12678213153639424\",\n" +
+                "          \"sourceDataBaseName\": \"科研系统\",\n" +
+                "          \"dataSource\": \"12678213153639424\"\n" +
+                "        }\n" +
+                "      ],\n" +
+                "      \"mappingDataObject\": [\n" +
+                "        {\n" +
+                "          \"dataobjectname\": \"测试\",\n" +
+                "          \"dataobject\": \"t_test\"\n" +
+                "        }\n" +
+                "      ],\n" +
+                "      \"mappingDataObjectField\": [\n" +
+                "        {\n" +
+                "          \"wid\": \"17294374993453056\",\n" +
+                "          \"datafieldname\": \"c1\",\n" +
+                "          \"database_wid\": \"12678213153639424\",\n" +
+                "          \"datafield\": \"c1\",\n" +
+                "          \"dataobject\": \"t_test\",\n" +
+                "          \"order_num\": \"1\",\n" +
+                "          \"fieldtype\": \"int4\"\n" +
+                "        }\n" +
+                "      ],\n" +
+                "      \"taskMappingWid\": \"19355553762846720\",\n" +
+                "      \"taskWid\": \"19174668581147648\"\n" +
+                "    }\n" +
+                "  ]";
+        List<DataFieldForMapping> dataFieldForMappings = JSONArray.parseArray(testStr,DataFieldForMapping.class);
+
+
+
+        List<Map<String, Object>> mappingDataObjectField = new ArrayList<>();
+        /*判断目标表和目标源是否不同*/
+        List<Map<String, Object>> mappingDataObjects = new ArrayList<>();
+        List<Long> mappingDataBases = new ArrayList<>();
+        for (DataFieldForMapping dataFieldForMapping : dataFieldForMappings) {
+            Map<String, Object> dataObjectMap = dataFieldForMapping.getMappingDataObject().get(0);
+            Long sourceDataBaseWid = dataFieldForMapping.getMappingDataBases().get(0).getSourceDataBaseWid();
+            mappingDataBases.add(sourceDataBaseWid);
+            mappingDataObjects.add(dataObjectMap);
+
+            /*判断字段是否重复*/
+            List<Map<String, Object>> dataObjectField = dataFieldForMapping.getMappingDataObjectField();
+            if (mappingDataObjectField.contains(dataObjectField.get(0))){
+                System.out.println("目标字段重复请重新配置");
+
+            }else {
+                mappingDataObjectField.addAll(dataObjectField);
+            }
+        }
+        List<Long> mappingDataBase = mappingDataBases.stream().distinct().collect(Collectors.toList());
+        List<Map<String,Object>> mappingDataObject = mappingDataObjects.stream().distinct().collect(Collectors.toList());
+        if (mappingDataBase.size() > 1 || mappingDataObject.size() > 1){
+            System.out.println("目标表、目标系统不一致请重新配置");
+        }
+
+        System.out.println("没有重复数据");
+
+    }
+
+
 
 }
