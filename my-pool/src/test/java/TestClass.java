@@ -1310,4 +1310,251 @@ public class TestClass {
         * */
     }
 
+    @Test
+    public void StrTest(){
+//        String S = "JZG";
+//        String[] dataobject = S.split(",");
+//        System.out.println(dataobject[0]);
+
+        List<String> sourceDataObjects = new ArrayList<>();
+        String sourceDataObject = "";
+//        if (data.getSourceDataObject().size() > 0) {
+//            for (Map<String, Object> map : data.getSourceDataObject()) {
+                String sourceDataObjectStr = String.valueOf("dataobject");
+                sourceDataObjects.add(sourceDataObjectStr);
+//            }
+//        }
+        /*获取源头表、字段信息*/
+        if (sourceDataObjects.size() > 0) {
+            /*当只有一个元素dataobject时，输出的内容是：dataobject*/
+            sourceDataObject = sourceDataObjects.stream().map(String::valueOf).collect(Collectors.joining(","));
+        }
+        System.out.println(sourceDataObject);
+
+    }
+
+    @Test
+    public void ListMapInDataObject(){
+        String testStr = " [\n" +
+                "    {\n" +
+                "      \"wid\": \"18355834970903552\",\n" +
+                "      \"database_wid\": \"12679637446445056\",\n" +
+                "      \"dataObject\": \"ods_cjsthdsj\",\n" +
+                "      \"dataField\": \"xxjgdm\",\n" +
+                "      \"dataFieldName\": \"学校机构代码\",\n" +
+                "      \"fieldType\": \"VARCHAR\",\n" +
+                "      \"fieldLength\": \"36\",\n" +
+                "      \"fieldprecision\": null,\n" +
+                "      \"is_pk\": null,\n" +
+                "      \"is_null_able\": null,\n" +
+                "      \"reference_table\": null,\n" +
+                "      \"reference_table_name\": null,\n" +
+                "      \"reference_field\": null,\n" +
+                "      \"reference_field_text\": null,\n" +
+                "      \"reference_field_name\": null,\n" +
+                "      \"foreign_table\": null,\n" +
+                "      \"foreign_table_name\": null,\n" +
+                "      \"foreign_field\": null,\n" +
+                "      \"foreign_field_name\": null,\n" +
+                "      \"dataFieldDesc\": null,\n" +
+                "      \"dataRange\": null,\n" +
+                "      \"open_type\": null,\n" +
+                "      \"share_type\": null,\n" +
+                "      \"standard_field_num\": null,\n" +
+                "      \"quote_standard_field\": null,\n" +
+                "      \"quote_standard_field_num\": null,\n" +
+                "      \"quote_standard_field_name\": null,\n" +
+                "      \"reference_standard\": null,\n" +
+                "      \"status_able\": null,\n" +
+                "      \"order_num\": null,\n" +
+                "      \"creator\": null,\n" +
+                "      \"is_core\": null,\n" +
+                "      \"need_encrypt\": null,\n" +
+                "      \"keep_history\": null,\n" +
+                "      \"code_diff\": null,\n" +
+                "      \"openFields\": null,\n" +
+                "      \"attr_type\": null,\n" +
+                "      \"showFields\": null,\n" +
+                "      \"field_row_num\": null,\n" +
+                "      \"original_field\": null,\n" +
+                "      \"operation\": null,\n" +
+                "      \"modify_time\": null,\n" +
+                "      \"column\": null,\n" +
+                "      \"checkType\": null,\n" +
+                "      \"checkRule\": null,\n" +
+                "      \"checkRuleName\": null,\n" +
+                "      \"mappingDataBases\": [\n" +
+                "        {\n" +
+                "          \"id\": \"S002\",\n" +
+                "          \"sourceDataBaseWid\": \"12678213153639424\",\n" +
+                "          \"sourceDataBaseName\": \"科研系统\",\n" +
+                "          \"dataSource\": \"12678213153639424\"\n" +
+                "        }\n" +
+                "      ],\n" +
+                "      \"mappingDataObject\": [\n" +
+                "        {\n" +
+                "          \"dataobjectname\": \"测试\",\n" +
+                "          \"dataobject\": \"t_test\"\n" +
+                "        }\n" +
+                "      ],\n" +
+                "      \"mappingDataObjectField\": [\n" +
+                "        {\n" +
+                "          \"wid\": \"17294374989520896\",\n" +
+                "          \"datafieldname\": \"c1\",\n" +
+                "          \"database_wid\": \"12678213153639424\",\n" +
+                "          \"datafield\": \"c1\",\n" +
+                "          \"dataobject\": \"t_test\",\n" +
+                "          \"order_num\": \"1\",\n" +
+                "          \"fieldtype\": \"int4\"\n" +
+                "        }\n" +
+                "      ],\n" +
+                "      \"taskMappingWid\": \"19355553762584576\",\n" +
+                "      \"taskWid\": \"19174668581147648\"\n" +
+                "    },\n" +
+                "    {\n" +
+                "      \"wid\": \"18355834970903552\",\n" +
+                "      \"database_wid\": \"12679637446445056\",\n" +
+                "      \"dataObject\": \"ods_cjsthdsj\",\n" +
+                "      \"dataField\": \"xxjgdm\",\n" +
+                "      \"dataFieldName\": \"学校机构代码\",\n" +
+                "      \"fieldType\": \"VARCHAR\",\n" +
+                "      \"fieldLength\": \"36\",\n" +
+                "      \"fieldprecision\": null,\n" +
+                "      \"is_pk\": null,\n" +
+                "      \"is_null_able\": null,\n" +
+                "      \"reference_table\": null,\n" +
+                "      \"reference_table_name\": null,\n" +
+                "      \"reference_field\": null,\n" +
+                "      \"reference_field_text\": null,\n" +
+                "      \"reference_field_name\": null,\n" +
+                "      \"foreign_table\": null,\n" +
+                "      \"foreign_table_name\": null,\n" +
+                "      \"foreign_field\": null,\n" +
+                "      \"foreign_field_name\": null,\n" +
+                "      \"dataFieldDesc\": null,\n" +
+                "      \"dataRange\": null,\n" +
+                "      \"open_type\": null,\n" +
+                "      \"share_type\": null,\n" +
+                "      \"standard_field_num\": null,\n" +
+                "      \"quote_standard_field\": null,\n" +
+                "      \"quote_standard_field_num\": null,\n" +
+                "      \"quote_standard_field_name\": null,\n" +
+                "      \"reference_standard\": null,\n" +
+                "      \"status_able\": null,\n" +
+                "      \"order_num\": null,\n" +
+                "      \"creator\": null,\n" +
+                "      \"is_core\": null,\n" +
+                "      \"need_encrypt\": null,\n" +
+                "      \"keep_history\": null,\n" +
+                "      \"code_diff\": null,\n" +
+                "      \"openFields\": null,\n" +
+                "      \"attr_type\": null,\n" +
+                "      \"showFields\": null,\n" +
+                "      \"field_row_num\": null,\n" +
+                "      \"original_field\": null,\n" +
+                "      \"operation\": null,\n" +
+                "      \"modify_time\": null,\n" +
+                "      \"column\": null,\n" +
+                "      \"checkType\": null,\n" +
+                "      \"checkRule\": null,\n" +
+                "      \"checkRuleName\": null,\n" +
+                "      \"mappingDataBases\": [\n" +
+                "        {\n" +
+                "          \"id\": \"S002\",\n" +
+                "          \"sourceDataBaseWid\": \"12678213153639424\",\n" +
+                "          \"sourceDataBaseName\": \"科研系统\",\n" +
+                "          \"dataSource\": \"12678213153639424\"\n" +
+                "        }\n" +
+                "      ],\n" +
+                "      \"mappingDataObject\": [\n" +
+                "        {\n" +
+                "          \"dataobjectname\": \"测试\",\n" +
+                "          \"dataobject\": \"t_test\"\n" +
+                "        }\n" +
+                "      ],\n" +
+                "      \"mappingDataObjectField\": [\n" +
+                "        {\n" +
+                "          \"wid\": \"17294374993453056\",\n" +
+                "          \"datafieldname\": \"c1\",\n" +
+                "          \"database_wid\": \"12678213153639424\",\n" +
+                "          \"datafield\": \"c1\",\n" +
+                "          \"dataobject\": \"t_test\",\n" +
+                "          \"order_num\": \"1\",\n" +
+                "          \"fieldtype\": \"int4\"\n" +
+                "        }\n" +
+                "      ],\n" +
+                "      \"taskMappingWid\": \"19355553762846720\",\n" +
+                "      \"taskWid\": \"19174668581147648\"\n" +
+                "    }\n" +
+                "  ]";
+        List<DataFieldForMapping> dataFieldForMappings = JSONArray.parseArray(testStr,DataFieldForMapping.class);
+
+
+
+        List<Map<String, Object>> mappingDataObjectField = new ArrayList<>();
+        /*判断目标表和目标源是否不同*/
+        List<Map<String, Object>> mappingDataObjects = new ArrayList<>();
+        List<Long> mappingDataBases = new ArrayList<>();
+        for (DataFieldForMapping dataFieldForMapping : dataFieldForMappings) {
+            Map<String, Object> dataObjectMap = dataFieldForMapping.getMappingDataObject().get(0);
+            Long sourceDataBaseWid = dataFieldForMapping.getMappingDataBases().get(0).getSourceDataBaseWid();
+            mappingDataBases.add(sourceDataBaseWid);
+            mappingDataObjects.add(dataObjectMap);
+
+            /*判断字段是否重复*/
+            List<Map<String, Object>> dataObjectField = dataFieldForMapping.getMappingDataObjectField();
+            if (mappingDataObjectField.contains(dataObjectField.get(0))){
+                System.out.println("目标字段重复请重新配置");
+
+            }else {
+                mappingDataObjectField.addAll(dataObjectField);
+            }
+        }
+        List<Long> mappingDataBase = mappingDataBases.stream().distinct().collect(Collectors.toList());
+        List<Map<String,Object>> mappingDataObject = mappingDataObjects.stream().distinct().collect(Collectors.toList());
+        if (mappingDataBase.size() > 1 || mappingDataObject.size() > 1){
+            System.out.println("目标表、目标系统不一致请重新配置");
+        }
+
+        System.out.println("没有重复数据");
+
+    }
+
+
+    @Test
+    public void arrayToList(){
+
+        List<String> stdDataObject = new ArrayList<>();
+//        if (!"1".equals(String.valueOf(serviceBloodTemp.get("apply_database_wid")))){
+            List<Map<String,Object>> dataObjectByThemeDataObject = new ArrayList<>();
+            Map<String,Object> map1 = new HashMap<>();
+            map1.put("bztable","bztable,bztable2,bztable3");
+            Map<String,Object> map2 = new HashMap<>();
+            map2.put("bztable","bztable4");
+            dataObjectByThemeDataObject.add(map1);
+            dataObjectByThemeDataObject.add(map2);
+            for (Map<String,Object> map : dataObjectByThemeDataObject){
+                String[] bztables = map.get("bztable").toString().split(",");
+                List<String> list = Arrays.asList(bztables);
+                stdDataObject.addAll(list);
+            }
+//        }
+        stdDataObject.stream().forEach(System.out::println);
+    }
+
+    @Test
+    public void streamForMap(){
+        List<Map<String, Object>> themeTaskInfos = new ArrayList<>();
+        Map<String, Object> m1 = new HashMap<>();
+        m1.put("task_wid",112222L);
+        Map<String, Object> m2 = new HashMap<>();
+        m2.put("task_wid",2223332L);
+        themeTaskInfos.add(m1);
+        themeTaskInfos.add(m2);
+
+        List<Long> taskWids = themeTaskInfos.stream().map(map -> (Long) map.get("task_wid")).collect(Collectors.toList());
+        taskWids.stream().forEach(System.out::println);
+    }
+
+
 }
