@@ -13,10 +13,14 @@ import java.io.*;
 import java.sql.SQLOutput;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.concurrent.ForkJoinPool;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+//import net.sf.json.JSONObject;
 
 /**
  * @author gyf
@@ -127,18 +131,25 @@ public class TestClass {
 //            }
 //        }
 
-        String s2 = "1231242321123" + null;
-        /*String[] s2split = s2.split("_");
-        System.out.println(s2split[0]);
-        System.out.println(s2split.length);*/
-        String id = "";
-        if (s2.contains("_")){
-            id = StringUtils.substringAfter(s2, "_");
-        }else {
-            id = s2;
-        }
+//        String s2 = "1231242321123" + null;
+//        /*String[] s2split = s2.split("_");
+//        System.out.println(s2split[0]);
+//        System.out.println(s2split.length);*/
+//        String id = "";
+//        if (s2.contains("_")){
+//            id = StringUtils.substringAfter(s2, "_");
+//        }else {
+//            id = s2;
+//        }
+//
+//        System.out.println(id);
 
-        System.out.println(id);
+        /*7-9 二级部门号:获取数字9*/
+        String s1 = "7-9 二级部门号";
+        String[] s = s1.split(" ");
+        String num = StringUtils.substringAfter(s[0], "-");
+        System.out.println(num);
+
     }
 
 
@@ -1556,5 +1567,98 @@ public class TestClass {
         taskWids.stream().forEach(System.out::println);
     }
 
+    @Test
+    public void streamForMapPro(){
+//        JSONObject jsonObject = JSONObject.parseObject("\"relation\": [{\n" +
+//                "    \"source\": \"1687933776472\",\n" +
+//                "    \"target\": \"1687933777886\"\n" +
+//                "  }, {\n" +
+//                "    \"source\": \"1687933777886\",\n" +
+//                "    \"target\": \"1687933772571\"\n" +
+//                "  }]");
+        JSONObject jsonObject = JSONObject.parseObject("\"relation\": []");
+
+//        List<String> targetIds = jsonObject.getJSONArray("relation").stream().map(obj->JSONObject.fromObject(obj).getString("target")).collect(Collectors.toList());
+
+    }
+
+    @Test
+    public void createUUID(){
+        String uuid = UUID.randomUUID().toString().replaceAll("-","");
+        System.out.println(uuid);
+        String kafkaTopic = "_DT_" + uuid;
+
+        System.out.println(kafkaTopic);
+
+
+        System.out.println(StringUtils.substringAfterLast(kafkaTopic,"_"));
+    }
+    @Test
+    public void kongstring(){
+//        String yesterdayTaskStatus = "";
+//        String taskExecutionStatus = "";
+//        if (!"E".equals(yesterdayTaskStatus) && "E".equals(taskExecutionStatus)){
+//            System.out.println("进入判断");
+//        }
+//        String e = "{\"result\":true}";
+//        JSONObject jsonObject = com.alibaba.fastjson.JSONObject.parseObject(e);
+//        Boolean flag = (Boolean) jsonObject.get("result");
+//        System.out.println(flag);
+
+
+
+//        JSONObject result = new JSONObject();
+//        result.put("code", "0");
+//        result.put("msg", "操作失败");
+//        JSONObject result2 = new JSONObject();
+//        result2.put("code", "1");
+//        result2.put("msg", "操作成功");
+//        result = result2;
+//        System.out.println(result.toJSONString());
+
+      /*  boolean contains = Arrays.asList(
+                "/api/drm/standardManager/standardNorm/querySubsetCatalogTree",
+                "/api/drm/standardManager/standardNorm/standardNormManager",
+                "/api/drp/resourceCatalog/resourceListManager/getreleaseTypeIsEnable"
+        ).contains("/api/drm/standardManager/standardNorm/standardNormManager");
+
+        System.out.println(contains);*/
+
+//        /*奇偶数判断*/
+//        int i = 13;
+//        System.out.println("取运算" + i % 2);
+//        if (i % 2 == 0){
+//            System.out.println("是偶数");
+//        }else {
+//            System.out.println("是奇数");
+//        }
+
+
+        /*List<String> 转为 String[]*/
+        List<String> li = new ArrayList<>();
+        li.add("qwq");
+        li.add("pkm");
+        li.add("rfv");
+        String[] strings = li.toArray(new String[0]);
+        for (int i = 0; i < strings.length; i++) {
+            System.out.println(strings[i]);
+        }
+    }
+
+    @Test
+    public void mapToSting(){
+        Map m = new HashMap<>();
+        Map data = new HashMap<>();
+        m.put("a","123");
+        data.put("data",m);
+//        System.out.println(data.toString()); //{data={a=123}}
+        String dataStr = data.get("data").toString(); //{a=123}
+
+        System.out.println(dataStr);
+        String a = JSONObject.parseObject(dataStr).getString("a");
+        System.out.println(a);
+//        String a = JSONObject.fromObject(dataStr).getString("a");
+
+    }
 
 }
