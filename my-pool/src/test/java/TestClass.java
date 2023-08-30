@@ -1647,17 +1647,30 @@ public class TestClass {
 
     @Test
     public void mapToSting(){
-        Map m = new HashMap<>();
-        Map data = new HashMap<>();
-        m.put("a","123");
-        data.put("data",m);
-//        System.out.println(data.toString()); //{data={a=123}}
-        String dataStr = data.get("data").toString(); //{a=123}
+        Map<String,String> recipientMap = new HashMap<>();
+        if (recipientMap.isEmpty()) {
+            recipientMap.put("userIds",null);
+            recipientMap.put("userNames",null);
+        }
+        String userIds = recipientMap.get("userIds");
+        String userNames = recipientMap.get("userNames");
+        if (userIds == null) {
+            System.out.println("userId是null"); //userId是null
+        }
+        System.out.println("userId=" + userIds +"; useNames=" + userNames); //userId=null; useNames=null
 
-        System.out.println(dataStr);
-        String a = JSONObject.parseObject(dataStr).getString("a");
-        System.out.println(a);
-//        String a = JSONObject.fromObject(dataStr).getString("a");
+
+//        Map m = new HashMap<>();
+//        Map data = new HashMap<>();
+//        m.put("a","123");
+//        data.put("data",m);
+////        System.out.println(data.toString()); //{data={a=123}}
+//        String dataStr = data.get("data").toString(); //{a=123}
+//
+//        System.out.println(dataStr);
+//        String a = JSONObject.parseObject(dataStr).getString("a");
+//        System.out.println(a);
+////        String a = JSONObject.fromObject(dataStr).getString("a");
 
     }
 
