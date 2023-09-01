@@ -1674,4 +1674,109 @@ public class TestClass {
 
     }
 
+    @Test
+    public void listDistinct() {
+        Student student1 = new Student("旺财", "男");
+        Student student2 = new Student("韩梅梅", "男");
+        Student student3 = new Student("大藏獒", "男");
+
+        Dog dog1 = new Dog("旺财", 1);
+        Dog dog2 = new Dog("小花够", 1);
+        Dog dog3 = new Dog("小强", 1);
+        Dog dog4 = new Dog("小奶狗", 1);
+        Dog dog5 = new Dog("大藏獒", 1);
+
+        List<Student> stuList = new ArrayList<>();
+        stuList.add(student1);
+        stuList.add(student2);
+        stuList.add(student3);
+
+        List<Dog> dogList = new ArrayList<>();
+        dogList.add(dog1);
+        dogList.add(dog2);
+        dogList.add(dog3);
+        dogList.add(dog4);
+        dogList.add(dog5);
+
+        /*
+        * 输出结果：
+        * student = Student{name='旺财', sex='男'}
+        * student = Student{name='大藏獒', sex='男'}
+        * */
+//        stuList = stuList.stream().filter( s -> dogList.stream().filter(f -> f.getName().equals(s.getName())).findAny().isPresent()).collect(Collectors.toList());
+
+        /*
+        * 输出结果：
+        * student = Student{name='韩梅梅', sex='男'}
+        * */
+        stuList = stuList.stream().parallel().filter(student -> dogList.stream().noneMatch(dog -> Objects.equals(student.getName(),dog.getName()))).collect(Collectors.toList());
+
+
+        for (Student student :stuList) {
+            System.out.println("student = "  + student);
+        }
+    }
+
+    class Student {
+        private String name;
+        private String sex;
+
+        public Student(String name, String sex) {
+            this.name = name;
+            this.sex = sex;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+
+        public String getSex() {
+            return sex;
+        }
+
+        public void setSex(String sex) {
+            this.sex = sex;
+        }
+
+        @Override
+        public String toString() {
+            return "Student{" +
+                    "name='" + name + '\'' +
+                    ", sex='" + sex + '\'' +
+                    '}';
+        }
+    }
+
+    class Dog {
+        private String name;
+        private int age;
+
+        public Dog(String name, int age) {
+            this.name = name;
+            this.age = age;
+        }
+
+        public int getAge() {
+            return age;
+        }
+
+        public void setAge(int age) {
+            this.age = age;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+    }
+
+
+
 }
