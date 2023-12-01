@@ -1,11 +1,16 @@
+import cn.hutool.core.date.DateUnit;
+import cn.hutool.core.date.DateUtil;
+import cn.hutool.poi.excel.ExcelExtractorUtil;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.google.common.collect.Lists;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.time.DateUtils;
 import org.junit.Test;
 
 import javax.swing.text.StyledEditorKit;
@@ -145,11 +150,29 @@ public class TestClass {
 //        System.out.println(id);
 
         /*7-9 二级部门号:获取数字9*/
-        String s1 = "7-9 二级部门号";
-        String[] s = s1.split(" ");
-        String num = StringUtils.substringAfter(s[0], "-");
-        System.out.println(num);
+//        String s1 = "7-9 二级部门号";
+//        String[] s = s1.split(" ");
+//        String num = StringUtils.substringAfter(s[0], "-");
+//        System.out.println(num);
 
+        String userSql = "SELECT USERID,MAIL,TEL FROM T_UDS_USER WHERE DEPT = ? AND ";
+        StringBuilder filterSql = new StringBuilder();
+        String[] recipientType = {"DEPT","ASSET"};
+        for (String type : recipientType) {
+            if ("DEPT".equals(type)) {
+                filterSql.append(" OR DEPTPRINCIPAL = '1'");
+            }
+            if ("ASSET".equals(type)) {
+                filterSql.append(" OR ASSETPRINCIPAL = '1'");
+            }
+        }
+        /*去除第一个OR*/
+        if (filterSql.length() > 0) {
+            filterSql = new StringBuilder(filterSql.substring(3, filterSql.length()));
+        }
+
+        userSql = userSql + filterSql.toString();
+        System.out.println(userSql);
     }
 
 
@@ -1274,9 +1297,24 @@ public class TestClass {
 
     @Test
     public void dateTest(){
-        Calendar date = Calendar.getInstance();
-        String year = String.valueOf(date.get(Calendar.YEAR));
-        System.out.println(year);
+//        Calendar date = Calendar.getInstance();
+//        String year = String.valueOf(date.get(Calendar.YEAR));
+//        System.out.println(year);
+
+        /*Date时间比较*/
+        try {
+            final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            Date startTime = sdf.parse("2023-11-06");
+            Date endTime = sdf.parse("2023-11-17");
+            Date nowDate = new Date();
+            if ( nowDate.after(startTime) && nowDate.before(endTime)) {
+                System.out.println("nowDate在startTime~endTime时间区间内");
+            }
+
+        }catch (Exception e ) {
+
+        }
+
     }
 
     @Test
@@ -1777,6 +1815,288 @@ public class TestClass {
         }
     }
 
+    @Test
+    public void StringForNull(){
+        String str = "";
+        System.out.println("str的length:" + str.length()); //str的length:0
+        if (org.apache.commons.lang3.StringUtils.isNotBlank(str)) {
+            System.out.println("str不为空字符串");
+        }
+
+        if (StringUtils.isEmpty(str)) {
+            System.out.println("str为null或\"\"");
+        }
+    }
+
+    @Test
+    public void splitListDynamic() {
+
+        Map<String,Object> m = new HashMap();
+        for (int i = 0; i < 2; i++) {
+            m.put("QWEI"+i,i);
+            m.put("PIP"+i,i);
+
+        }
+        Set set = m.keySet();
+        List<String> list = new ArrayList<>(set);
+
+        List<List<String>> partition = Lists.partition(list, 1000);
+        System.out.println("partition = " + partition);
+
+    }
+
+    @Test
+    public void time() throws ParseException {
+        //将指定格式的时间转换为时间戳：
+        String time = "2023-09-11 08:01:00";
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//首先定义待转换的时间格式
+        Date date = format.parse(time);//将带转换的时间字符串转换为date类型，然后使用getTime即可获取对应的时间戳
+
+//如果是Date类型的时间，直接使用date.getTime就可以获得其对应的毫秒级时间戳：
+        Long timeNum = date.getTime();//Date类中就保存有毫秒时间戳变量
+//        System.out.println(timeNum);
 
 
-}
+//        long between = DateUtil.between(date, new Date(), DateUnit.MINUTE);
+//        System.out.println(between);
+
+        /*根据时间戳计算时分秒*/
+        long betHourForAfter = 0L;
+        long betMinForAfter = 0L;
+        long betSecForAfter = 0L;
+        long betafter = 6341966;
+        betHourForAfter = (betafter) / (1000 * 60 * 60);
+        betMinForAfter = (betafter - betHourForAfter * (1000 * 60 * 60)) / (1000 * 60);
+        betSecForAfter = (betafter - betHourForAfter * (1000 * 60 * 60) - betMinForAfter * (1000 * 60)) / (1000);
+        /*
+        * 若 betafter = 6953783 则输出：1时55分53秒
+        * */
+        System.out.println(betHourForAfter + "时" + betMinForAfter + "分" + betSecForAfter + "秒");
+    }
+
+    @Test
+    public void DateTest() {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy.MM.dd");
+        Date date = new Date();
+        /*主数据版本号*/
+        String version = "v" + sdf.format(date);
+        System.out.println(version);
+    }
+
+    @Test
+    public void listremove2() {
+        final List<String> basicFieldList = Arrays.asList("dke_op_ts", "dke_op_type", "wid", "clrq", "czlx");
+        final List<String> fieldList = Arrays.asList("dm", "mc", "cc", "ls", "dke_op_ts", "dke_op_type", "wid", "clrq", "czlx");
+        List<String>  newfieldList = fieldList.stream().filter(f -> !basicFieldList.contains(f)).collect(Collectors.toList());
+        for (int i = 0; i < newfieldList.size(); i++) {
+            System.out.println(newfieldList.get(i));
+        }
+//        Date date = new Date(value * MILLIS_PER_DAY); //2019.05.13
+    }
+
+    @Test
+    public void kafkaintToDate() {
+        int value = 18029;
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        long MILLIS_PER_DAY = 24 * 60 * 60 * 1000;
+        long SHANGHAI = 8 * 60 * 60 * 1000;
+//        Date date = new Date(value * MILLIS_PER_DAY + SHANGHAI);
+        Date date = new Date(value * MILLIS_PER_DAY );
+        String format = sdf.format(date);
+        System.out.println(format);
+    }
+
+
+    @Test
+    public void strReplace() {
+        /*字符串替换*/
+//        String str = "[\"GaoYunFei\",\"TESTDEV\",\"ljwan\"]";
+//        String replaceStr = str.replace("]", ",");
+//        System.out.println(replaceStr);
+//
+//        String newStr = "[\"GaoYunFei\",\"TESTDEV\",\"ljwan\",\"gyf\",\"l\"]";
+//        String newRecipient = newStr.replace(replaceStr,"[");
+//        System.out.println("去除指定Str后：" + newRecipient );
+
+//        String s = "t_person_info|t_person_info_copy";
+//        String[] data = s.split("|");
+//        for (int i = 0; i < data.length; i++) {
+//            System.out.println(data[i]);
+//        }
+//
+//        System.out.println("输出二===========");
+//        String[] data2 = s.split("\\|");
+//        for (int i = 0; i < data2.length; i++) {
+//            System.out.println(data2[i]);
+//        }
+//
+//        /*
+//        * 输出结果：
+//        *
+//        t
+//        _
+//        p
+//        e
+//        r
+//        s
+//        o
+//        n
+//        _
+//        i
+//        n
+//        f
+//        o
+//        |
+//        t
+//        _
+//        p
+//        e
+//        r
+//        s
+//        o
+//        n
+//        _
+//        i
+//        n
+//        f
+//        o
+//        _
+//        c
+//        o
+//        p
+//        y
+//        输出二===========
+//        t_person_info
+//        t_person_info_copy
+//        *
+//        * */
+
+        /*字符串匹配*/
+        String source = "," + "s028_t_xsxx1,t_xsxx1,t_new_nsxx" + ",";
+        String dataObject = "," + "s028_t_xsxx1" + ",";
+        if (source.contains(dataObject)) {
+            System.out.println("包含" + dataObject);
+        }
+//集合去重函数
+//        Collections.disjoint();
+
+    }
+
+    @Test
+    public void StringBuildTest() {
+        StringBuilder dataObjectFieldSql = new StringBuilder();
+        boolean flag = true;
+        for (int i = 0; i < 2; i++) {
+            if (flag) {
+                dataObjectFieldSql.append("qew").append(" UNION ");
+            }
+        }
+        if (dataObjectFieldSql.toString().isEmpty()) {
+            System.out.println("输出空字符串");
+        }else{
+            dataObjectFieldSql = new StringBuilder(dataObjectFieldSql.substring(0, dataObjectFieldSql.length() - 6));
+            System.out.println(dataObjectFieldSql);
+            System.out.println("输出字符串:" + dataObjectFieldSql.toString());
+        }
+
+
+    }
+
+    @Test
+    public void intArray(){
+       int[] c = new int[]{};
+       String str = "1234";
+       if (str.contains("1")) {
+           c = newObject(c,1);
+       }
+        if (str.contains("2")) {
+            c = newObject(c,2);
+        }
+        if (str.contains("8")) {
+            c = newObject(c,3);
+        }
+        if (str.contains("4")) {
+            c = newObject(c,4);
+        }
+        for (int i = 0; i < c.length; i++) {
+            System.out.println(c[i]);
+        }
+
+    }
+
+    //数组累加
+    public static int[] newObject(int[] ob, int str){
+        if(ob == null){
+            return new int[]{str};
+        }else{
+            int[] newOb = new int[ob.length+1];
+            for(int i=0;i<newOb.length-1;i++){
+                newOb[i]=ob[i];
+            }
+            newOb[ob.length] = str;
+            return newOb;
+        }
+    }
+
+
+    @Test
+    public void StrReplace() {
+        String message = "您好，\n" +
+                "\n" +
+                "根据学校【关于学校数据资源目录2023年检的通知】工作安排（http://42.244.8.19:8100/uds/#/rescatalog），统筹学校数据资源建设,更好的利用数据对学校各项事业赋能，推动校内业务发展，我处将开展数据资源目录建设相关工作，主要包括以下几个方面的工作内容：\n" +
+                "\n" +
+                "\n" +
+                "\n" +
+                "1、数据资源目录变动更新（如各单位目录有变更，需要再次确权和数据维护）\n" +
+                "\n" +
+                "2、数据资源目录年检工作\n" +
+                "\n" +
+                "3、数据资源目录2023年度考核工作\n" +
+                "\n" +
+                "\n" +
+                "附件是我们整理的年度数据资源考核要求、数据资源目录工作方案和数据资源服务平台年检功能的使用手册。请各部门登录数据服务平台进行年检（http://42.244.8.19:8100/uds/#/rescatalog ，账号和密码为统一身份认证号码（如无法登录或无部门年检权限可联系我们进行权限变更），查看系统当中的数据资源目录情况，完成年检工作。\n" +
+                "\n" +
+                "后续我处将基于最新的数据资源目录进行相关的年终考核工作。\n" +
+                "\n" +
+                "对于年检工作和考核工作有任何问题，也可向数信处进行反馈。反馈请联系 张三 电话 111111 邮箱：111111@163.com\n" +
+                "\n" +
+                "\n" +
+                "\n" +
+                "祝身体健康 工作顺利";
+        if (message != null){
+            if (message.contains("\n")) {
+                message = message.replaceAll("\n", "<br/>");
+            }
+            if (message.contains("\t")) {
+                message = message.replaceAll("\t","&nbsp;");
+            }
+
+        }
+        System.out.println(message);
+    }
+
+
+    @Test
+    public void StrReplaces(){
+        String name = "何文隆(邮件发送失败、)、福州信息职业技术学院(邮件发送失败、微信发送失败、)、test()";
+
+        String s = name.replaceAll("\\、\\)", "\\)").replaceAll("\\(\\)", "");
+        System.out.println(s);
+
+    }
+
+    @Test
+    public void JsonToClassTest(){
+        String jsonstr = "{ \"datas\":[{\"id\":\"1\",\"sourceDataBaseWid\":12,\"sourceDataBaseName\":\"test1\",\"dataSource\":22},{\"id\":\"2\",\"sourceDataBaseWid\":22,\"sourceDataBaseName\":\"test2\",\"dataSource\":29}] }";
+        JSONObject jsonObject = JSONObject.parseObject(jsonstr);
+        List<SourceDataBase> datas = jsonObject.getJSONArray("datas").toJavaList(SourceDataBase.class);
+        datas.forEach(System.out::println);
+        /*
+        *结果输出：
+        * SourceDataBase(id=1, sourceDataBaseWid=12, sourceDataBaseName=test1, dataSource=22)
+        * SourceDataBase(id=2, sourceDataBaseWid=22, sourceDataBaseName=test2, dataSource=29)
+        * */
+
+    }
+
+ }
