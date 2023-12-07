@@ -2078,11 +2078,16 @@ public class TestClass {
 
     @Test
     public void StrReplaces(){
-        String name = "何文隆(邮件发送失败、)、福州信息职业技术学院(邮件发送失败、微信发送失败、)、test()";
+//        String name = "何文隆(邮件发送失败、)、福州信息职业技术学院(邮件发送失败、微信发送失败、)、test()";
+//
+//        String s = name.replaceAll("\\、\\)", "\\)").replaceAll("\\(\\)", "");
+//        System.out.println(s);
 
-        String s = name.replaceAll("\\、\\)", "\\)").replaceAll("\\(\\)", "");
-        System.out.println(s);
-
+        String result = "申请成功的资产数：搜索,";
+        if (StringUtils.endsWith(result,",")) {
+            result = result.substring(0, result.length() - 1);
+        }
+        System.out.println(result);
     }
 
     @Test
