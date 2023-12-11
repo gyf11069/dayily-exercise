@@ -2083,11 +2083,19 @@ public class TestClass {
 //        String s = name.replaceAll("\\、\\)", "\\)").replaceAll("\\(\\)", "");
 //        System.out.println(s);
 
-        String result = "申请成功的资产数：搜索,";
-        if (StringUtils.endsWith(result,",")) {
-            result = result.substring(0, result.length() - 1);
+//        String result = "申请成功的资产数：搜索,";
+//        if (StringUtils.endsWith(result,",")) {
+//            result = result.substring(0, result.length() - 1);
+//        }
+//        System.out.println(result);
+
+        String hidemenus="['dataSensitiveLevel','dataWorthLevel']";
+        JSONArray jsonArray = JSONArray.parseArray(hidemenus);
+        System.out.println(JSON.toJSONString(jsonArray));
+        for (int i = 0; i < jsonArray.size(); i++) {
+            System.out.println(jsonArray.get(i));
         }
-        System.out.println(result);
+
     }
 
     @Test
