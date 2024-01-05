@@ -1,5 +1,6 @@
 import cn.hutool.core.date.DateUnit;
 import cn.hutool.core.date.DateUtil;
+import cn.hutool.crypto.digest.MD5;
 import cn.hutool.poi.excel.ExcelExtractorUtil;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
@@ -9,6 +10,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
+import org.apache.commons.collections.map.HashedMap;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.time.DateUtils;
 import org.junit.Test;
@@ -2089,13 +2091,36 @@ public class TestClass {
 //        }
 //        System.out.println(result);
 
-        String hidemenus="['dataSensitiveLevel','dataWorthLevel']";
-        JSONArray jsonArray = JSONArray.parseArray(hidemenus);
-        System.out.println(JSON.toJSONString(jsonArray));
-        for (int i = 0; i < jsonArray.size(); i++) {
-            System.out.println(jsonArray.get(i));
-        }
+//        String hidemenus="['dataSensitiveLevel','dataWorthLevel']";
+//        JSONArray jsonArray = JSONArray.parseArray(hidemenus);
+//        System.out.println(JSON.toJSONString(jsonArray));
+//        for (int i = 0; i < jsonArray.size(); i++) {
+//            System.out.println(jsonArray.get(i));
+//        }
 
+
+//
+//        String dataBaseWid = StringUtils.substringBefore("1-t_person_info_copy", "-");
+//        String dataObject = StringUtils.substringAfter("1-t_person_info_copy", "-");
+//
+//        System.out.println(dataBaseWid + "\n" + dataObject); // 1 t_person_info_copy
+
+
+//        String sign = "serv,123212," + "12131," + "data,dadaonjl";
+//        String[] signSplit = sign.split(",");
+//        Long serviceWid = Long.valueOf(signSplit[2]);
+//        Long appId = Long.valueOf(signSplit[1]);
+//        String dataobject = signSplit[3];
+//        System.out.println(serviceWid + "\n" + appId + "\n" + dataobject);
+//        /* 输出结果
+//        * 12131
+//            123212
+//            data
+//        * */
+
+        String dataObjectString = "";
+        String substring = dataObjectString.substring(0, dataObjectString.length() - 1);
+        System.out.println(substring);
     }
 
     @Test
@@ -2110,6 +2135,173 @@ public class TestClass {
         * SourceDataBase(id=2, sourceDataBaseWid=22, sourceDataBaseName=test2, dataSource=29)
         * */
 
+    }
+
+    @Test
+    public void listRemoveOrAdd() {
+        List<Map<String,Object>> list = new ArrayList<>();
+        List<Map<String,Object>> newlist = new ArrayList<>();
+        Map<String,Object> index = new HashMap<>();
+        index.put("sourcedataobject", "source1");
+        index.put("source_database_wid", "source_database_wid1");
+        index.put("target_database_wid", "target_database_wid1");
+        index.put("targetdataobject", "targetdataobject1");
+
+        Map<String,Object> index2 = new HashMap<>();
+        index2.put("sourcedataobject", "source2");
+        index2.put("source_database_wid", "source_database_wid2");
+        index2.put("target_database_wid", "target_database_wid2");
+        index2.put("targetdataobject", "targetdataobject2");
+
+        Map<String,Object> index3 = new HashMap<>();
+        index3.put("sourcedataobject", "source3");
+        index3.put("source_database_wid", "source_database_wid3");
+        index3.put("target_database_wid", "target_database_wid3");
+        index3.put("targetdataobject", "targetdataobject3");
+        list.add(index);
+        list.add(index2);
+        list.add(index3);
+
+        list.forEach(System.out::println);
+
+        for (int i = 0; i < list.size(); i++) {
+            Map<String, Object> temp = list.get(i);
+            String sourceDatabaseWid = String.valueOf(temp.get("source_database_wid"));
+            String sourcedataobject = String.valueOf(temp.get("sourcedataobject"));
+            String targetDatabaseWid = String.valueOf(temp.get("target_database_wid"));
+            String targetdataobject = String.valueOf(temp.get("targetdataobject"));
+            if (sourcedataobject.contains("source1")) {
+                Map<String,Object> in = new HashMap<>();
+                in.put("sourcedataobject", "source1——in1");
+                in.put("source_database_wid", "source_database_wid1——in1");
+                in.put("target_database_wid", "target_database_wid1——in1");
+                in.put("targetdataobject", "targetdataobject1——in1");
+                Map<String,Object> in2 = new HashMap<>();
+                in2.put("sourcedataobject", "source1——in2");
+                in2.put("source_database_wid", "source_database_wid1——in2");
+                in2.put("target_database_wid", "target_database_wid1——in2");
+                in2.put("targetdataobject", "targetdataobject1——in2");
+                newlist.add(in);
+                newlist.add(in2);
+            }else {
+                newlist.add(temp);
+            }
+
+        }
+
+
+        System.out.println("===========替换后血缘=============");
+
+        newlist.forEach(System.out::println);
+
+
+    }
+
+    @Test
+    public void assertNullTest() {
+        String s = null;
+        s = "111";
+        assert s != null;
+        if (s.equals("1")) {
+            System.out.println(s);
+        }
+
+    }
+
+    @Test
+    public void listRetainAll(){
+        List<String> l1 = new ArrayList<String>(Arrays.asList(new String[]{"111", "111", "2232", "212133", "w21q2w"}));
+        List<String> l2 = new ArrayList<String>(Arrays.asList(new String[]{"12232","1121", "2123133","31212", "7777","8888", "9999","2111", "3443"}));
+        l1.retainAll(l2);
+        l1.forEach(System.out::println);
+    }
+
+    @Test
+    public void listMapRange(){
+        Map<String,List<Map<String,Object>>> mapList = new HashMap<>();
+        List<Map<String,Object>> l1 = new ArrayList<>();
+        Map<String,Object> m1 = new HashMap<>();
+        m1.put("databasename","数据湖");
+        m1.put("data","1");
+        l1.add(m1);
+        Map<String,Object> m2 = new HashMap<>();
+        m2.put("databasename","数据湖");
+        m2.put("data","2");
+        l1.add(m2);
+        Map<String,Object> m3 = new HashMap<>();
+        m3.put("databasename","数据");
+        m3.put("data","3");
+        l1.add(m3);
+        Map<String,Object> m4 = new HashMap<>();
+        m4.put("databasename","数据");
+        m4.put("data","4");
+        l1.add(m4);
+
+        Map<String,Object> m5 = new HashMap<>();
+        m5.put("databasename","数据湖");
+        m5.put("data","5");
+        l1.add(m5);
+        Map<String,Object> m6 = new HashMap<>();
+        m6.put("databasename","数据");
+        m6.put("data","6");
+        l1.add(m6);
+
+//
+//        Map<String,Object> m2 = new HashMap<>();
+//        m2.put("databasename","数据");
+//        m2.put("data","5");
+//        m2.put("databasename","数据");
+//        m2.put("data","6");
+//        m2.put("databasename","数据");
+//        m2.put("data","7");
+//        m2.put("databasename","数据");
+//        m2.put("data","8");
+        mapList = l1.stream().collect(Collectors.groupingBy(task -> String.valueOf(task.get("databasename"))));
+        if (!mapList.isEmpty()) {
+            Iterator<Map.Entry<String, List<Map<String, Object>>>> iterator = mapList.entrySet().iterator();
+            while (iterator.hasNext()) {
+                Map.Entry<String, List<Map<String, Object>>> next = iterator.next();
+                System.out.print("键：" + next.getKey() + "," + "值：");
+                next.getValue().forEach(System.out::print);
+                System.out.println();
+//                System.out.println("删除集合");
+//                iterator.remove();
+            }
+        }
+
+        if (!mapList.isEmpty()) {
+            System.out.println("第二次循环");
+            Iterator<Map.Entry<String, List<Map<String, Object>>>> iterator = mapList.entrySet().iterator();
+            while (iterator.hasNext()) {
+                Map.Entry<String, List<Map<String, Object>>> next = iterator.next();
+                System.out.print("键：" + next.getKey() + "," + "值：");
+                next.getValue().forEach(System.out::print);
+//                System.out.println();
+//                System.out.println("删除集合");
+//                mapList.remove("数据");
+            }
+        }
+
+//        List<Map<String, Object>> list = mapList.get("数据");
+//        if (list == null) {
+//            System.out.println("list集合为空");
+//        }else {
+//            System.out.println("集合不为空");
+//            list.forEach(System.out::print);
+//        }
+
+
+    }
+
+    @Test
+    public void arrayForeach() {
+        String columnMapping = "";
+        if (StringUtils.isNotBlank(columnMapping)) {
+            String[] columnMappingSplit = columnMapping.split(",");
+            for (int j = 0; j < columnMappingSplit.length - 1 ; j++) {
+
+            }
+        }
     }
 
  }
