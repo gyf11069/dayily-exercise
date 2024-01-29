@@ -1128,21 +1128,26 @@ public class TestClass {
 
     @Test
     public void listremove(){
-//        List<String> li = new ArrayList<>();
-//        li.add("a");
-//        li.add("b");
-//        li.add("c");
-//
-//        List<String> l2 = new ArrayList<>();
-//        l2.add("b");
-//        l2.add("c");
-//        l2.add("d");
-//
-//        l2.removeAll(li);
-//        l2.forEach(System.out::println);
-//
-//        String string = JSONArray.toJSONString(li);
-//        System.out.println(string);
+        List<String> li = new ArrayList<>();
+        li.add("a");
+        li.add("b");
+        li.add("c");
+
+        List<String> l2 = new ArrayList<>();
+        l2.add("a");
+        l2.add("b");
+        l2.add("c");
+
+        l2.removeAll(li);
+        if (!l2.isEmpty()) {
+            l2.forEach(System.out::println);
+        }else {
+            System.out.println("l2 集合为空");
+        }
+
+
+        String string = JSONArray.toJSONString(li);
+        System.out.println(string);
 
 
 //        Map<String,Object> m1 = new HashMap<>();
@@ -1168,14 +1173,14 @@ public class TestClass {
 //            System.out.println("data equals");
 //        }
 
-        String s = "";
-        String s1 = null;
-        if (Objects.equals(s,s1)){
-            System.out.println("null object equals");
-        }
-        if (null == null){
-            System.out.println("null==null");
-        }
+//        String s = "";
+//        String s1 = null;
+//        if (Objects.equals(s,s1)){
+//            System.out.println("null object equals");
+//        }
+//        if (null == null){
+//            System.out.println("null==null");
+//        }
     }
 
     @Test
