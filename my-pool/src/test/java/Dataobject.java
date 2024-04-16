@@ -1,6 +1,7 @@
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
+import java.util.Map;
 import java.util.Objects;
 
 /**
@@ -21,6 +22,7 @@ public class Dataobject {
     String DATAOBJECTTYPE;
     String IMPORTANT;
     String CZBZ;
+    Map<String,Object> param;
 
     /*@Override
     public boolean equals(Object o) {
