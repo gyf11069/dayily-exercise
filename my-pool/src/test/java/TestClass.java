@@ -1,6 +1,5 @@
 import cn.hutool.core.date.DateUnit;
 import cn.hutool.core.date.DateUtil;
-import cn.hutool.core.lang.Validator;
 import cn.hutool.crypto.digest.MD5;
 import cn.hutool.poi.excel.ExcelExtractorUtil;
 import com.alibaba.fastjson.JSON;
@@ -18,11 +17,9 @@ import org.junit.Test;
 
 import javax.swing.text.StyledEditorKit;
 import java.io.*;
-import java.lang.reflect.Field;
 import java.sql.SQLOutput;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
@@ -1131,26 +1128,21 @@ public class TestClass {
 
     @Test
     public void listremove(){
-        List<String> li = new ArrayList<>();
-        li.add("a");
-        li.add("b");
-        li.add("c");
-
-        List<String> l2 = new ArrayList<>();
-        l2.add("a");
-        l2.add("b");
-        l2.add("c");
-
-        l2.removeAll(li);
-        if (!l2.isEmpty()) {
-            l2.forEach(System.out::println);
-        }else {
-            System.out.println("l2 集合为空");
-        }
-
-
-        String string = JSONArray.toJSONString(li);
-        System.out.println(string);
+//        List<String> li = new ArrayList<>();
+//        li.add("a");
+//        li.add("b");
+//        li.add("c");
+//
+//        List<String> l2 = new ArrayList<>();
+//        l2.add("b");
+//        l2.add("c");
+//        l2.add("d");
+//
+//        l2.removeAll(li);
+//        l2.forEach(System.out::println);
+//
+//        String string = JSONArray.toJSONString(li);
+//        System.out.println(string);
 
 
 //        Map<String,Object> m1 = new HashMap<>();
@@ -2312,135 +2304,4 @@ public class TestClass {
         }
     }
 
-    @Test
-    public void stringcontentpooltest() {
-        String s = new String("a");
-//        s.intern();
-        String s2 = "a";
-        System.out.println(s == s2);
-
-        String s3 = new String("a") + new String("a");
-//        s3.intern();
-        String s4 = "aa";
-        System.out.println(s3 == s4);
-    }
-
-    @Test
-    public void getDateTime() {
-        Date nowData = new Date();
-        int year = nowData.getYear();
-        System.out.println(year);
-
-        LocalDate localDate = LocalDate.now();
-        int year1 = localDate.getYear();
-        System.out.println(year1);
-
-    }
-
-    @Test
-    public void emailtest() {
-//        String[] s = new String[5];
-//        /*邮箱格式校验*/
-//        String decrypt_mail = "1234567890@qq.com";
-//        boolean isEmail = Validator.isEmail(decrypt_mail);
-//        if (isEmail) {
-//            System.out.println("邮箱正确");
-//            s[0] = decrypt_mail;
-//        }else {
-//            System.out.println("邮箱错误");
-//        }
-//        System.out.println("源数组长度" +s.length);
-//
-//        String[] clones = s.clone();
-//        System.out.println("拷贝数组长度" +clones.length);
-//        for (int i = 0; i < clones.length; i++) {
-//            System.out.println("数组元素" + i + "值为：" + clones[i].toString());
-//
-//        }
-
-        //List
-        List<String> ls = new ArrayList<>();
-        /*邮箱格式校验*/
-        String decrypt_mail = "1234567890@qq.com";
-        boolean isEmail = Validator.isEmail(decrypt_mail);
-        if (isEmail) {
-            System.out.println("邮箱正确");
-            ls.add(decrypt_mail);
-        }else {
-            System.out.println("邮箱错误");
-        }
-        String[] strings = ls.toArray(new String[ls.size()]);
-
-        for (int i = 0; i < strings.length; i++) {
-            System.out.println(strings[i].toString());
-        }
-
-
-    }
-
-    @Test
-    public void testMap() {
-        Map<String, Object> map = new HashMap<>();
-        map.put("test", "1");
-
-        String s = map.get("r") == null ? null : String.valueOf(map.get("r"));
-        System.out.println(s);
-
-    }
-
-    @Test
-    public void ObjectToMaptest() {
-        DataObject dataObject = new DataObject();
-        dataObject.setCZBZ("cas");
-        Map<String,Object> map = new HashMap<>();
-        map.put("test","testas");
-        dataObject.setParam(map);
-        Map<String,Object> map1 = null;
-        try {
-            map1 = beanToMap(dataObject);
-        } catch (IllegalAccessException e) {
-            throw new RuntimeException(e);
-        }
-        for (Map.Entry<String,Object> entry : map1.entrySet()) {
-            String key = entry.getKey();
-            Object value =  entry.getValue();
-            System.out.println(key + ":" + value);
-            /*
-                CZBZ:cas
-                param:{test=testas}
-                this$0:TestClass@66cd51c3
-                IMPORTANT:null
-            * */
-        }
-        System.out.println("==============");
-        /* {test=testas} */
-        System.out.println(map1.get("param").toString());
-        System.out.println("=======JSON=======");
-        /* {"CZBZ":"cas","param":{"test":"testas"},"this$0":{}} */
-        System.out.println(JSON.toJSONString(map1));
-
-    }
-
-    /**
-     * 对象转Map
-     * @param object
-     * @return
-     * @throws IllegalAccessException
-     */
-    private Map beanToMap(Object object) throws IllegalAccessException {
-        Map<String, Object> map = new HashMap<String, Object>();
-        Field[] fields = object.getClass().getDeclaredFields();
-        for (Field field : fields) {
-            field.setAccessible(true);
-            map.put(field.getName(), field.get(object));
-        }
-        return map;
-    }
-
-    @Data
-    private class DataObject {
-        String IMPORTANT;
-        String CZBZ;
-        Map<String,Object> param;
-    }
-}
+ }
