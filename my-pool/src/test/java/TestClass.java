@@ -6,6 +6,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.google.common.collect.Lists;
+import com.gyunf.utils.JsonTreeObject;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -2304,4 +2305,1753 @@ public class TestClass {
         }
     }
 
+    //数组参数转为List<String>集合
+    @Test
+    public void arrayStringToList() {
+        String arrayString = "{\n" +
+                "  \"retcode\": 0,\n" +
+                "  \"retmsg\": \"success\",\n" +
+                "  \"data\": [\n" +
+                "    {\n" +
+                "      \"name\": \"OpenAI\",\n" +
+                "      \"logo\": \"\",\n" +
+                "      \"tags\": \"LLM,TEXT EMBEDDING,SPEECH2TEXT,MODERATION\",\n" +
+                "      \"status\": \"1\",\n" +
+                "      \"id\": \"5ecbf6f0-4d65-41b6-b77e-f169dc5f2376\",\n" +
+                "      \"create_time\": 1720602086519,\n" +
+                "      \"create_date\": \"2024-07-10T17:01:21.401772\",\n" +
+                "      \"update_time\": 1720602086519,\n" +
+                "      \"update_date\": \"2024-07-10T17:01:21.401890\"\n" +
+                "    },\n" +
+                "    {\n" +
+                "      \"name\": \"Tongyi-Qianwen\",\n" +
+                "      \"logo\": \"\",\n" +
+                "      \"tags\": \"LLM,TEXT EMBEDDING,SPEECH2TEXT,MODERATION\",\n" +
+                "      \"status\": \"1\",\n" +
+                "      \"id\": \"640d2e3c-2ed4-4a6c-9e71-92c8d4e195b9\",\n" +
+                "      \"create_time\": 1720602086541,\n" +
+                "      \"create_date\": \"2024-07-10T17:01:21.401772\",\n" +
+                "      \"update_time\": 1720602086541,\n" +
+                "      \"update_date\": \"2024-07-10T17:01:21.401890\"\n" +
+                "    },\n" +
+                "    {\n" +
+                "      \"name\": \"ZHIPU-AI\",\n" +
+                "      \"logo\": \"\",\n" +
+                "      \"tags\": \"LLM,TEXT EMBEDDING,SPEECH2TEXT,MODERATION\",\n" +
+                "      \"status\": \"1\",\n" +
+                "      \"id\": \"28a0f347-1409-44b4-b3c3-ae80a8ca2931\",\n" +
+                "      \"create_time\": 1720602086556,\n" +
+                "      \"create_date\": \"2024-07-10T17:01:21.401772\",\n" +
+                "      \"update_time\": 1720602086557,\n" +
+                "      \"update_date\": \"2024-07-10T17:01:21.401890\"\n" +
+                "    },\n" +
+                "    {\n" +
+                "      \"name\": \"Ollama\",\n" +
+                "      \"logo\": \"\",\n" +
+                "      \"tags\": \"LLM,TEXT EMBEDDING,SPEECH2TEXT,MODERATION\",\n" +
+                "      \"status\": \"1\",\n" +
+                "      \"id\": \"30b7eedc-0dae-4229-9aea-8fd154e8e85d\",\n" +
+                "      \"create_time\": 1720602086571,\n" +
+                "      \"create_date\": \"2024-07-10T17:01:21.401772\",\n" +
+                "      \"update_time\": 1720602086571,\n" +
+                "      \"update_date\": \"2024-07-10T17:01:21.401890\"\n" +
+                "    },\n" +
+                "    {\n" +
+                "      \"name\": \"Moonshot\",\n" +
+                "      \"logo\": \"\",\n" +
+                "      \"tags\": \"LLM,TEXT EMBEDDING\",\n" +
+                "      \"status\": \"1\",\n" +
+                "      \"id\": \"fe2be056-ae9d-49dc-92d5-5a047dda46d7\",\n" +
+                "      \"create_time\": 1720602086584,\n" +
+                "      \"create_date\": \"2024-07-10T17:01:21.401772\",\n" +
+                "      \"update_time\": 1720602086584,\n" +
+                "      \"update_date\": \"2024-07-10T17:01:21.401890\"\n" +
+                "    },\n" +
+                "    {\n" +
+                "      \"name\": \"Xinference\",\n" +
+                "      \"logo\": \"\",\n" +
+                "      \"tags\": \"LLM,TEXT EMBEDDING,SPEECH2TEXT,MODERATION\",\n" +
+                "      \"status\": \"1\",\n" +
+                "      \"id\": \"8a87fcca-bb87-43e1-8019-4765b1c1e234\",\n" +
+                "      \"create_time\": 1720602086612,\n" +
+                "      \"create_date\": \"2024-07-10T17:01:21.401772\",\n" +
+                "      \"update_time\": 1720602086612,\n" +
+                "      \"update_date\": \"2024-07-10T17:01:21.401890\"\n" +
+                "    },\n" +
+                "    {\n" +
+                "      \"name\": \"DeepSeek\",\n" +
+                "      \"logo\": \"\",\n" +
+                "      \"tags\": \"LLM\",\n" +
+                "      \"status\": \"1\",\n" +
+                "      \"id\": \"a8fb96bb-1557-4598-926e-b77addebac1d\",\n" +
+                "      \"create_time\": 1720602086640,\n" +
+                "      \"create_date\": \"2024-07-10T17:01:21.401772\",\n" +
+                "      \"update_time\": 1720602086640,\n" +
+                "      \"update_date\": \"2024-07-10T17:01:21.401890\"\n" +
+                "    },\n" +
+                "    {\n" +
+                "      \"name\": \"VolcEngine\",\n" +
+                "      \"logo\": \"\",\n" +
+                "      \"tags\": \"LLM, TEXT EMBEDDING\",\n" +
+                "      \"status\": \"1\",\n" +
+                "      \"id\": \"80c43c92-4725-491c-8f71-013a43c9f9ec\",\n" +
+                "      \"create_time\": 1720602086654,\n" +
+                "      \"create_date\": \"2024-07-10T17:01:21.401772\",\n" +
+                "      \"update_time\": 1720602086654,\n" +
+                "      \"update_date\": \"2024-07-10T17:01:21.401890\"\n" +
+                "    },\n" +
+                "    {\n" +
+                "      \"name\": \"BaiChuan\",\n" +
+                "      \"logo\": \"\",\n" +
+                "      \"tags\": \"LLM,TEXT EMBEDDING\",\n" +
+                "      \"status\": \"1\",\n" +
+                "      \"id\": \"cc4daa3e-4c28-47a4-b684-0a7a960e4f70\",\n" +
+                "      \"create_time\": 1720602086667,\n" +
+                "      \"create_date\": \"2024-07-10T17:01:21.401772\",\n" +
+                "      \"update_time\": 1720602086667,\n" +
+                "      \"update_date\": \"2024-07-10T17:01:21.401890\"\n" +
+                "    },\n" +
+                "    {\n" +
+                "      \"name\": \"Jina\",\n" +
+                "      \"logo\": \"\",\n" +
+                "      \"tags\": \"TEXT EMBEDDING, TEXT RE-RANK\",\n" +
+                "      \"status\": \"1\",\n" +
+                "      \"id\": \"6c24672a-ace1-485f-a194-93f8beed17e4\",\n" +
+                "      \"create_time\": 1720602086681,\n" +
+                "      \"create_date\": \"2024-07-10T17:01:21.401772\",\n" +
+                "      \"update_time\": 1720602086681,\n" +
+                "      \"update_date\": \"2024-07-10T17:01:21.401890\"\n" +
+                "    },\n" +
+                "    {\n" +
+                "      \"name\": \"MiniMax\",\n" +
+                "      \"logo\": \"\",\n" +
+                "      \"tags\": \"LLM,TEXT EMBEDDING\",\n" +
+                "      \"status\": \"1\",\n" +
+                "      \"id\": \"91b65791-39eb-4c03-9eaa-aa7c7f604eb5\",\n" +
+                "      \"create_time\": 1720602086708,\n" +
+                "      \"create_date\": \"2024-07-10T17:01:21.401772\",\n" +
+                "      \"update_time\": 1720602086708,\n" +
+                "      \"update_date\": \"2024-07-10T17:01:21.401890\"\n" +
+                "    },\n" +
+                "    {\n" +
+                "      \"name\": \"Mistral\",\n" +
+                "      \"logo\": \"\",\n" +
+                "      \"tags\": \"LLM,TEXT EMBEDDING\",\n" +
+                "      \"status\": \"1\",\n" +
+                "      \"id\": \"db1bed6b-ca53-4cf5-aba2-bf832a314c26\",\n" +
+                "      \"create_time\": 1720602086722,\n" +
+                "      \"create_date\": \"2024-07-10T17:01:21.401772\",\n" +
+                "      \"update_time\": 1720602086722,\n" +
+                "      \"update_date\": \"2024-07-10T17:01:21.401890\"\n" +
+                "    },\n" +
+                "    {\n" +
+                "      \"name\": \"Azure-OpenAI\",\n" +
+                "      \"logo\": \"\",\n" +
+                "      \"tags\": \"LLM,TEXT EMBEDDING,SPEECH2TEXT,MODERATION\",\n" +
+                "      \"status\": \"1\",\n" +
+                "      \"id\": \"896623b8-8e5e-4a3e-8a60-8cdd16971b88\",\n" +
+                "      \"create_time\": 1720602086736,\n" +
+                "      \"create_date\": \"2024-07-10T17:01:21.401772\",\n" +
+                "      \"update_time\": 1720602086736,\n" +
+                "      \"update_date\": \"2024-07-10T17:01:21.401890\"\n" +
+                "    },\n" +
+                "    {\n" +
+                "      \"name\": \"Bedrock\",\n" +
+                "      \"logo\": \"\",\n" +
+                "      \"tags\": \"LLM,TEXT EMBEDDING\",\n" +
+                "      \"status\": \"1\",\n" +
+                "      \"id\": \"62d387c9-8247-4b22-9c8a-b9d96c14e4b9\",\n" +
+                "      \"create_time\": 1720602086749,\n" +
+                "      \"create_date\": \"2024-07-10T17:01:21.401772\",\n" +
+                "      \"update_time\": 1720602086749,\n" +
+                "      \"update_date\": \"2024-07-10T17:01:21.401890\"\n" +
+                "    }\n" +
+                "  ]\n" +
+                "}";
+        JSONObject jsonObject = JSONObject.parseObject(arrayString);
+        if (jsonObject != null && "0".equals(jsonObject.getString("retcode"))) {
+            JSONArray jsonArray = JSONArray.parseArray(jsonObject.getString("data"));
+            if (!jsonArray.isEmpty()) {
+                List<Map> list = jsonArray.toJavaList(Map.class);
+                List<String> name = list.stream().map(map -> map.get("name") == null ? null : String.valueOf(map.get("name"))).collect(Collectors.toList());
+                System.out.println("name List:");
+                name.forEach(System.out::println);
+            }
+            System.out.println("name List is empty");
+        }
+
+    }
+
+    //多个数组转换成目录树结构
+    @Test
+    public void dataArryToTree() {
+        String str = "{\n" +
+                "  \"retcode\": 0,\n" +
+                "  \"retmsg\": \"success\",\n" +
+                "  \"data\": {\n" +
+                "    \"OpenAI\": [\n" +
+                "      {\n" +
+                "        \"llm_name\": \"gpt-4o\",\n" +
+                "        \"mdl_type\": \"chat,image2text\",\n" +
+                "        \"fid\": \"OpenAI\",\n" +
+                "        \"max_tokens\": 128000,\n" +
+                "        \"tags\": \"LLM,CHAT,128K\",\n" +
+                "        \"status\": \"1\",\n" +
+                "        \"id\": \"c3dc6317-05c0-4963-a935-e52324144851\",\n" +
+                "        \"create_time\": 1720602086764,\n" +
+                "        \"create_date\": \"2024-07-10T17:01:21.401772\",\n" +
+                "        \"update_time\": 1720602086764,\n" +
+                "        \"update_date\": \"2024-07-10T17:01:21.401890\",\n" +
+                "        \"available\": false\n" +
+                "      },\n" +
+                "      {\n" +
+                "        \"llm_name\": \"gpt-3.5-turbo\",\n" +
+                "        \"mdl_type\": \"chat\",\n" +
+                "        \"fid\": \"OpenAI\",\n" +
+                "        \"max_tokens\": 4096,\n" +
+                "        \"tags\": \"LLM,CHAT,4K\",\n" +
+                "        \"status\": \"1\",\n" +
+                "        \"id\": \"f14f1c5c-abda-46c6-b329-26a335d38507\",\n" +
+                "        \"create_time\": 1720602086783,\n" +
+                "        \"create_date\": \"2024-07-10T17:01:21.401772\",\n" +
+                "        \"update_time\": 1720602086783,\n" +
+                "        \"update_date\": \"2024-07-10T17:01:21.401890\",\n" +
+                "        \"available\": false\n" +
+                "      },\n" +
+                "      {\n" +
+                "        \"llm_name\": \"gpt-3.5-turbo-16k-0613\",\n" +
+                "        \"mdl_type\": \"chat\",\n" +
+                "        \"fid\": \"OpenAI\",\n" +
+                "        \"max_tokens\": 16385,\n" +
+                "        \"tags\": \"LLM,CHAT,16k\",\n" +
+                "        \"status\": \"1\",\n" +
+                "        \"id\": \"4a18789f-ffdb-4402-be6e-96f06d3a609f\",\n" +
+                "        \"create_time\": 1720602086797,\n" +
+                "        \"create_date\": \"2024-07-10T17:01:21.401772\",\n" +
+                "        \"update_time\": 1720602086797,\n" +
+                "        \"update_date\": \"2024-07-10T17:01:21.401890\",\n" +
+                "        \"available\": false\n" +
+                "      },\n" +
+                "      {\n" +
+                "        \"llm_name\": \"text-embedding-ada-002\",\n" +
+                "        \"mdl_type\": \"embedding\",\n" +
+                "        \"fid\": \"OpenAI\",\n" +
+                "        \"max_tokens\": 8191,\n" +
+                "        \"tags\": \"TEXT EMBEDDING,8K\",\n" +
+                "        \"status\": \"1\",\n" +
+                "        \"id\": \"1e2f26bc-07f4-4d39-9620-2ed76e35a5c4\",\n" +
+                "        \"create_time\": 1720602086810,\n" +
+                "        \"create_date\": \"2024-07-10T17:01:21.401772\",\n" +
+                "        \"update_time\": 1720602086810,\n" +
+                "        \"update_date\": \"2024-07-10T17:01:21.401890\",\n" +
+                "        \"available\": false\n" +
+                "      },\n" +
+                "      {\n" +
+                "        \"llm_name\": \"text-embedding-3-small\",\n" +
+                "        \"mdl_type\": \"embedding\",\n" +
+                "        \"fid\": \"OpenAI\",\n" +
+                "        \"max_tokens\": 8191,\n" +
+                "        \"tags\": \"TEXT EMBEDDING,8K\",\n" +
+                "        \"status\": \"1\",\n" +
+                "        \"id\": \"e0807022-70e6-4a1a-be89-cf5f4677d0b0\",\n" +
+                "        \"create_time\": 1720602086824,\n" +
+                "        \"create_date\": \"2024-07-10T17:01:21.401772\",\n" +
+                "        \"update_time\": 1720602086824,\n" +
+                "        \"update_date\": \"2024-07-10T17:01:21.401890\",\n" +
+                "        \"available\": false\n" +
+                "      },\n" +
+                "      {\n" +
+                "        \"llm_name\": \"text-embedding-3-large\",\n" +
+                "        \"mdl_type\": \"embedding\",\n" +
+                "        \"fid\": \"OpenAI\",\n" +
+                "        \"max_tokens\": 8191,\n" +
+                "        \"tags\": \"TEXT EMBEDDING,8K\",\n" +
+                "        \"status\": \"1\",\n" +
+                "        \"id\": \"09024e48-560f-4bcf-a7ff-7756953df7c4\",\n" +
+                "        \"create_time\": 1720602086838,\n" +
+                "        \"create_date\": \"2024-07-10T17:01:21.401772\",\n" +
+                "        \"update_time\": 1720602086838,\n" +
+                "        \"update_date\": \"2024-07-10T17:01:21.401890\",\n" +
+                "        \"available\": false\n" +
+                "      },\n" +
+                "      {\n" +
+                "        \"llm_name\": \"whisper-1\",\n" +
+                "        \"mdl_type\": \"speech2text\",\n" +
+                "        \"fid\": \"OpenAI\",\n" +
+                "        \"max_tokens\": 26214400,\n" +
+                "        \"tags\": \"SPEECH2TEXT\",\n" +
+                "        \"status\": \"1\",\n" +
+                "        \"id\": \"5b4c6e5d-8a33-4706-a5f2-ad8d931cdef8\",\n" +
+                "        \"create_time\": 1720602086852,\n" +
+                "        \"create_date\": \"2024-07-10T17:01:21.401772\",\n" +
+                "        \"update_time\": 1720602086852,\n" +
+                "        \"update_date\": \"2024-07-10T17:01:21.401890\",\n" +
+                "        \"available\": false\n" +
+                "      },\n" +
+                "      {\n" +
+                "        \"llm_name\": \"gpt-4\",\n" +
+                "        \"mdl_type\": \"chat\",\n" +
+                "        \"fid\": \"OpenAI\",\n" +
+                "        \"max_tokens\": 8191,\n" +
+                "        \"tags\": \"LLM,CHAT,8K\",\n" +
+                "        \"status\": \"1\",\n" +
+                "        \"id\": \"bec54f9c-f249-4c1c-be45-1760c2aa1360\",\n" +
+                "        \"create_time\": 1720602086866,\n" +
+                "        \"create_date\": \"2024-07-10T17:01:21.401772\",\n" +
+                "        \"update_time\": 1720602086866,\n" +
+                "        \"update_date\": \"2024-07-10T17:01:21.401890\",\n" +
+                "        \"available\": false\n" +
+                "      },\n" +
+                "      {\n" +
+                "        \"llm_name\": \"gpt-4-turbo\",\n" +
+                "        \"mdl_type\": \"chat\",\n" +
+                "        \"fid\": \"OpenAI\",\n" +
+                "        \"max_tokens\": 8191,\n" +
+                "        \"tags\": \"LLM,CHAT,8K\",\n" +
+                "        \"status\": \"1\",\n" +
+                "        \"id\": \"17820281-a00c-4797-8877-0f22d1b5837c\",\n" +
+                "        \"create_time\": 1720602086879,\n" +
+                "        \"create_date\": \"2024-07-10T17:01:21.401772\",\n" +
+                "        \"update_time\": 1720602086879,\n" +
+                "        \"update_date\": \"2024-07-10T17:01:21.401890\",\n" +
+                "        \"available\": false\n" +
+                "      },\n" +
+                "      {\n" +
+                "        \"llm_name\": \"gpt-4-32k\",\n" +
+                "        \"mdl_type\": \"chat\",\n" +
+                "        \"fid\": \"OpenAI\",\n" +
+                "        \"max_tokens\": 32768,\n" +
+                "        \"tags\": \"LLM,CHAT,32K\",\n" +
+                "        \"status\": \"1\",\n" +
+                "        \"id\": \"a7e8e7ff-0dcb-4954-9a2e-502ca4c655b1\",\n" +
+                "        \"create_time\": 1720602086893,\n" +
+                "        \"create_date\": \"2024-07-10T17:01:21.401772\",\n" +
+                "        \"update_time\": 1720602086893,\n" +
+                "        \"update_date\": \"2024-07-10T17:01:21.401890\",\n" +
+                "        \"available\": false\n" +
+                "      },\n" +
+                "      {\n" +
+                "        \"llm_name\": \"gpt-4-vision-preview\",\n" +
+                "        \"mdl_type\": \"image2text\",\n" +
+                "        \"fid\": \"OpenAI\",\n" +
+                "        \"max_tokens\": 765,\n" +
+                "        \"tags\": \"LLM,CHAT,IMAGE2TEXT\",\n" +
+                "        \"status\": \"1\",\n" +
+                "        \"id\": \"aa11859a-ee62-44f9-8b20-6cc2225e9808\",\n" +
+                "        \"create_time\": 1720602086909,\n" +
+                "        \"create_date\": \"2024-07-10T17:01:21.401772\",\n" +
+                "        \"update_time\": 1720602086909,\n" +
+                "        \"update_date\": \"2024-07-10T17:01:21.401890\",\n" +
+                "        \"available\": false\n" +
+                "      }\n" +
+                "    ],\n" +
+                "    \"Tongyi-Qianwen\": [\n" +
+                "      {\n" +
+                "        \"llm_name\": \"qwen-turbo\",\n" +
+                "        \"mdl_type\": \"chat\",\n" +
+                "        \"fid\": \"Tongyi-Qianwen\",\n" +
+                "        \"max_tokens\": 8191,\n" +
+                "        \"tags\": \"LLM,CHAT,8K\",\n" +
+                "        \"status\": \"1\",\n" +
+                "        \"id\": \"1520d3ef-9c5c-453b-864c-b95aad018bc0\",\n" +
+                "        \"create_time\": 1720602086923,\n" +
+                "        \"create_date\": \"2024-07-10T17:01:21.401772\",\n" +
+                "        \"update_time\": 1720602086923,\n" +
+                "        \"update_date\": \"2024-07-10T17:01:21.401890\",\n" +
+                "        \"available\": false\n" +
+                "      },\n" +
+                "      {\n" +
+                "        \"llm_name\": \"qwen-plus\",\n" +
+                "        \"mdl_type\": \"chat\",\n" +
+                "        \"fid\": \"Tongyi-Qianwen\",\n" +
+                "        \"max_tokens\": 32768,\n" +
+                "        \"tags\": \"LLM,CHAT,32K\",\n" +
+                "        \"status\": \"1\",\n" +
+                "        \"id\": \"d2ade535-b0c5-48a7-b2c3-308c2b618d26\",\n" +
+                "        \"create_time\": 1720602086937,\n" +
+                "        \"create_date\": \"2024-07-10T17:01:21.401772\",\n" +
+                "        \"update_time\": 1720602086937,\n" +
+                "        \"update_date\": \"2024-07-10T17:01:21.401890\",\n" +
+                "        \"available\": false\n" +
+                "      },\n" +
+                "      {\n" +
+                "        \"llm_name\": \"qwen-max-1201\",\n" +
+                "        \"mdl_type\": \"chat\",\n" +
+                "        \"fid\": \"Tongyi-Qianwen\",\n" +
+                "        \"max_tokens\": 5899,\n" +
+                "        \"tags\": \"LLM,CHAT,6K\",\n" +
+                "        \"status\": \"1\",\n" +
+                "        \"id\": \"3d328b69-2c09-4973-a5ed-c432433ca4c6\",\n" +
+                "        \"create_time\": 1720602086951,\n" +
+                "        \"create_date\": \"2024-07-10T17:01:21.401772\",\n" +
+                "        \"update_time\": 1720602086951,\n" +
+                "        \"update_date\": \"2024-07-10T17:01:21.401890\",\n" +
+                "        \"available\": false\n" +
+                "      },\n" +
+                "      {\n" +
+                "        \"llm_name\": \"text-embedding-v2\",\n" +
+                "        \"mdl_type\": \"embedding\",\n" +
+                "        \"fid\": \"Tongyi-Qianwen\",\n" +
+                "        \"max_tokens\": 2048,\n" +
+                "        \"tags\": \"TEXT EMBEDDING,2K\",\n" +
+                "        \"status\": \"1\",\n" +
+                "        \"id\": \"ed80a080-05ab-4a32-af0a-b907836cd7d0\",\n" +
+                "        \"create_time\": 1720602086965,\n" +
+                "        \"create_date\": \"2024-07-10T17:01:21.401772\",\n" +
+                "        \"update_time\": 1720602086965,\n" +
+                "        \"update_date\": \"2024-07-10T17:01:21.401890\",\n" +
+                "        \"available\": false\n" +
+                "      },\n" +
+                "      {\n" +
+                "        \"llm_name\": \"paraformer-realtime-8k-v1\",\n" +
+                "        \"mdl_type\": \"speech2text\",\n" +
+                "        \"fid\": \"Tongyi-Qianwen\",\n" +
+                "        \"max_tokens\": 26214400,\n" +
+                "        \"tags\": \"SPEECH2TEXT\",\n" +
+                "        \"status\": \"1\",\n" +
+                "        \"id\": \"40a62012-73b4-4f6d-8ccb-3c8621a679fd\",\n" +
+                "        \"create_time\": 1720602086979,\n" +
+                "        \"create_date\": \"2024-07-10T17:01:21.401772\",\n" +
+                "        \"update_time\": 1720602086979,\n" +
+                "        \"update_date\": \"2024-07-10T17:01:21.401890\",\n" +
+                "        \"available\": false\n" +
+                "      },\n" +
+                "      {\n" +
+                "        \"llm_name\": \"qwen-vl-max\",\n" +
+                "        \"mdl_type\": \"image2text\",\n" +
+                "        \"fid\": \"Tongyi-Qianwen\",\n" +
+                "        \"max_tokens\": 765,\n" +
+                "        \"tags\": \"LLM,CHAT,IMAGE2TEXT\",\n" +
+                "        \"status\": \"1\",\n" +
+                "        \"id\": \"fbf513bb-85b7-42ed-b917-d48b47265c12\",\n" +
+                "        \"create_time\": 1720602086997,\n" +
+                "        \"create_date\": \"2024-07-10T17:01:21.401772\",\n" +
+                "        \"update_time\": 1720602086997,\n" +
+                "        \"update_date\": \"2024-07-10T17:01:21.401890\",\n" +
+                "        \"available\": false\n" +
+                "      }\n" +
+                "    ],\n" +
+                "    \"ZHIPU-AI\": [\n" +
+                "      {\n" +
+                "        \"llm_name\": \"glm-3-turbo\",\n" +
+                "        \"mdl_type\": \"chat\",\n" +
+                "        \"fid\": \"ZHIPU-AI\",\n" +
+                "        \"max_tokens\": 128000,\n" +
+                "        \"tags\": \"LLM,CHAT,\",\n" +
+                "        \"status\": \"1\",\n" +
+                "        \"id\": \"f1d61c12-c8e2-4815-870b-12b8fdc423f5\",\n" +
+                "        \"create_time\": 1720602087011,\n" +
+                "        \"create_date\": \"2024-07-10T17:01:21.401772\",\n" +
+                "        \"update_time\": 1720602087011,\n" +
+                "        \"update_date\": \"2024-07-10T17:01:21.401890\",\n" +
+                "        \"available\": true\n" +
+                "      },\n" +
+                "      {\n" +
+                "        \"llm_name\": \"glm-4\",\n" +
+                "        \"mdl_type\": \"chat\",\n" +
+                "        \"fid\": \"ZHIPU-AI\",\n" +
+                "        \"max_tokens\": 128000,\n" +
+                "        \"tags\": \"LLM,CHAT,\",\n" +
+                "        \"status\": \"1\",\n" +
+                "        \"id\": \"ad54c001-fcbf-421c-ba24-0366a5d897ee\",\n" +
+                "        \"create_time\": 1720602087026,\n" +
+                "        \"create_date\": \"2024-07-10T17:01:21.401772\",\n" +
+                "        \"update_time\": 1720602087026,\n" +
+                "        \"update_date\": \"2024-07-10T17:01:21.401890\",\n" +
+                "        \"available\": true\n" +
+                "      },\n" +
+                "      {\n" +
+                "        \"llm_name\": \"glm-4v\",\n" +
+                "        \"mdl_type\": \"image2text\",\n" +
+                "        \"fid\": \"ZHIPU-AI\",\n" +
+                "        \"max_tokens\": 2000,\n" +
+                "        \"tags\": \"LLM,CHAT,IMAGE2TEXT\",\n" +
+                "        \"status\": \"1\",\n" +
+                "        \"id\": \"eb54a138-f9a7-4793-8277-5e5cee56ac50\",\n" +
+                "        \"create_time\": 1720602087040,\n" +
+                "        \"create_date\": \"2024-07-10T17:01:21.401772\",\n" +
+                "        \"update_time\": 1720602087040,\n" +
+                "        \"update_date\": \"2024-07-10T17:01:21.401890\",\n" +
+                "        \"available\": true\n" +
+                "      },\n" +
+                "      {\n" +
+                "        \"llm_name\": \"embedding-2\",\n" +
+                "        \"mdl_type\": \"embedding\",\n" +
+                "        \"fid\": \"ZHIPU-AI\",\n" +
+                "        \"max_tokens\": 512,\n" +
+                "        \"tags\": \"TEXT EMBEDDING\",\n" +
+                "        \"status\": \"1\",\n" +
+                "        \"id\": \"1eaaf4b7-dc28-447d-94c9-efae4a1eaf93\",\n" +
+                "        \"create_time\": 1720602087054,\n" +
+                "        \"create_date\": \"2024-07-10T17:01:21.401772\",\n" +
+                "        \"update_time\": 1720602087054,\n" +
+                "        \"update_date\": \"2024-07-10T17:01:21.401890\",\n" +
+                "        \"available\": true\n" +
+                "      }\n" +
+                "    ],\n" +
+                "    \"Moonshot\": [\n" +
+                "      {\n" +
+                "        \"llm_name\": \"moonshot-v1-8k\",\n" +
+                "        \"mdl_type\": \"chat\",\n" +
+                "        \"fid\": \"Moonshot\",\n" +
+                "        \"max_tokens\": 7900,\n" +
+                "        \"tags\": \"LLM,CHAT,\",\n" +
+                "        \"status\": \"1\",\n" +
+                "        \"id\": \"cd2a8a43-f6ac-48a3-a59a-8b956fc8d964\",\n" +
+                "        \"create_time\": 1720602087067,\n" +
+                "        \"create_date\": \"2024-07-10T17:01:21.401772\",\n" +
+                "        \"update_time\": 1720602087067,\n" +
+                "        \"update_date\": \"2024-07-10T17:01:21.401890\",\n" +
+                "        \"available\": false\n" +
+                "      },\n" +
+                "      {\n" +
+                "        \"llm_name\": \"moonshot-v1-32k\",\n" +
+                "        \"mdl_type\": \"chat\",\n" +
+                "        \"fid\": \"Moonshot\",\n" +
+                "        \"max_tokens\": 32768,\n" +
+                "        \"tags\": \"LLM,CHAT,\",\n" +
+                "        \"status\": \"1\",\n" +
+                "        \"id\": \"f44cf006-5e38-4ba3-898b-d87613be7177\",\n" +
+                "        \"create_time\": 1720602087082,\n" +
+                "        \"create_date\": \"2024-07-10T17:01:21.401772\",\n" +
+                "        \"update_time\": 1720602087082,\n" +
+                "        \"update_date\": \"2024-07-10T17:01:21.401890\",\n" +
+                "        \"available\": false\n" +
+                "      },\n" +
+                "      {\n" +
+                "        \"llm_name\": \"moonshot-v1-128k\",\n" +
+                "        \"mdl_type\": \"chat\",\n" +
+                "        \"fid\": \"Moonshot\",\n" +
+                "        \"max_tokens\": 128000,\n" +
+                "        \"tags\": \"LLM,CHAT\",\n" +
+                "        \"status\": \"1\",\n" +
+                "        \"id\": \"7bab5f43-b14a-44e7-9ae9-630f981c613a\",\n" +
+                "        \"create_time\": 1720602087095,\n" +
+                "        \"create_date\": \"2024-07-10T17:01:21.401772\",\n" +
+                "        \"update_time\": 1720602087095,\n" +
+                "        \"update_date\": \"2024-07-10T17:01:21.401890\",\n" +
+                "        \"available\": false\n" +
+                "      }\n" +
+                "    ],\n" +
+                "    \"FastEmbed\": [\n" +
+                "      {\n" +
+                "        \"llm_name\": \"BAAI/bge-small-en-v1.5\",\n" +
+                "        \"mdl_type\": \"embedding\",\n" +
+                "        \"fid\": \"FastEmbed\",\n" +
+                "        \"max_tokens\": 512,\n" +
+                "        \"tags\": \"TEXT EMBEDDING,\",\n" +
+                "        \"status\": \"1\",\n" +
+                "        \"id\": \"551a10a3-b464-4f50-bd8d-ebb4ec13037f\",\n" +
+                "        \"create_time\": 1720602087110,\n" +
+                "        \"create_date\": \"2024-07-10T17:01:21.401772\",\n" +
+                "        \"update_time\": 1720602087110,\n" +
+                "        \"update_date\": \"2024-07-10T17:01:21.401890\",\n" +
+                "        \"available\": true\n" +
+                "      },\n" +
+                "      {\n" +
+                "        \"llm_name\": \"BAAI/bge-small-zh-v1.5\",\n" +
+                "        \"mdl_type\": \"embedding\",\n" +
+                "        \"fid\": \"FastEmbed\",\n" +
+                "        \"max_tokens\": 512,\n" +
+                "        \"tags\": \"TEXT EMBEDDING,\",\n" +
+                "        \"status\": \"1\",\n" +
+                "        \"id\": \"cafaf09d-a53b-43e9-ac2a-3ed1a9b45058\",\n" +
+                "        \"create_time\": 1720602087125,\n" +
+                "        \"create_date\": \"2024-07-10T17:01:21.401772\",\n" +
+                "        \"update_time\": 1720602087125,\n" +
+                "        \"update_date\": \"2024-07-10T17:01:21.401890\",\n" +
+                "        \"available\": true\n" +
+                "      },\n" +
+                "      {\n" +
+                "        \"llm_name\": \"BAAI/bge-base-en-v1.5\",\n" +
+                "        \"mdl_type\": \"embedding\",\n" +
+                "        \"fid\": \"FastEmbed\",\n" +
+                "        \"max_tokens\": 512,\n" +
+                "        \"tags\": \"TEXT EMBEDDING,\",\n" +
+                "        \"status\": \"1\",\n" +
+                "        \"id\": \"8b70c19b-f535-4ee1-ae47-039ef49da958\",\n" +
+                "        \"create_time\": 1720602087139,\n" +
+                "        \"create_date\": \"2024-07-10T17:01:21.401772\",\n" +
+                "        \"update_time\": 1720602087139,\n" +
+                "        \"update_date\": \"2024-07-10T17:01:21.401890\",\n" +
+                "        \"available\": true\n" +
+                "      },\n" +
+                "      {\n" +
+                "        \"llm_name\": \"BAAI/bge-large-en-v1.5\",\n" +
+                "        \"mdl_type\": \"embedding\",\n" +
+                "        \"fid\": \"FastEmbed\",\n" +
+                "        \"max_tokens\": 512,\n" +
+                "        \"tags\": \"TEXT EMBEDDING,\",\n" +
+                "        \"status\": \"1\",\n" +
+                "        \"id\": \"7d001854-9869-4a1d-9c37-a818603e6e0a\",\n" +
+                "        \"create_time\": 1720602087153,\n" +
+                "        \"create_date\": \"2024-07-10T17:01:21.401772\",\n" +
+                "        \"update_time\": 1720602087153,\n" +
+                "        \"update_date\": \"2024-07-10T17:01:21.401890\",\n" +
+                "        \"available\": true\n" +
+                "      },\n" +
+                "      {\n" +
+                "        \"llm_name\": \"sentence-transformers/all-MiniLM-L6-v2\",\n" +
+                "        \"mdl_type\": \"embedding\",\n" +
+                "        \"fid\": \"FastEmbed\",\n" +
+                "        \"max_tokens\": 512,\n" +
+                "        \"tags\": \"TEXT EMBEDDING,\",\n" +
+                "        \"status\": \"1\",\n" +
+                "        \"id\": \"77c48f49-d5ee-4eaf-ac4c-d615b6df2b1b\",\n" +
+                "        \"create_time\": 1720602087168,\n" +
+                "        \"create_date\": \"2024-07-10T17:01:21.401772\",\n" +
+                "        \"update_time\": 1720602087168,\n" +
+                "        \"update_date\": \"2024-07-10T17:01:21.401890\",\n" +
+                "        \"available\": true\n" +
+                "      },\n" +
+                "      {\n" +
+                "        \"llm_name\": \"nomic-ai/nomic-embed-text-v1.5\",\n" +
+                "        \"mdl_type\": \"embedding\",\n" +
+                "        \"fid\": \"FastEmbed\",\n" +
+                "        \"max_tokens\": 8192,\n" +
+                "        \"tags\": \"TEXT EMBEDDING,\",\n" +
+                "        \"status\": \"1\",\n" +
+                "        \"id\": \"7edce662-7324-498c-b28f-da5831f2c361\",\n" +
+                "        \"create_time\": 1720602087182,\n" +
+                "        \"create_date\": \"2024-07-10T17:01:21.401772\",\n" +
+                "        \"update_time\": 1720602087182,\n" +
+                "        \"update_date\": \"2024-07-10T17:01:21.401890\",\n" +
+                "        \"available\": true\n" +
+                "      },\n" +
+                "      {\n" +
+                "        \"llm_name\": \"jinaai/jina-embeddings-v2-small-en\",\n" +
+                "        \"mdl_type\": \"embedding\",\n" +
+                "        \"fid\": \"FastEmbed\",\n" +
+                "        \"max_tokens\": 2147483648,\n" +
+                "        \"tags\": \"TEXT EMBEDDING,\",\n" +
+                "        \"status\": \"1\",\n" +
+                "        \"id\": \"778afa72-7d01-43d8-ae67-8aff059658bd\",\n" +
+                "        \"create_time\": 1720602087197,\n" +
+                "        \"create_date\": \"2024-07-10T17:01:21.401772\",\n" +
+                "        \"update_time\": 1720602087197,\n" +
+                "        \"update_date\": \"2024-07-10T17:01:21.401890\",\n" +
+                "        \"available\": true\n" +
+                "      },\n" +
+                "      {\n" +
+                "        \"llm_name\": \"jinaai/jina-embeddings-v2-base-en\",\n" +
+                "        \"mdl_type\": \"embedding\",\n" +
+                "        \"fid\": \"FastEmbed\",\n" +
+                "        \"max_tokens\": 2147483648,\n" +
+                "        \"tags\": \"TEXT EMBEDDING,\",\n" +
+                "        \"status\": \"1\",\n" +
+                "        \"id\": \"7d46bfdd-09a8-40df-9349-f9d6727cdd5f\",\n" +
+                "        \"create_time\": 1720602087211,\n" +
+                "        \"create_date\": \"2024-07-10T17:01:21.401772\",\n" +
+                "        \"update_time\": 1720602087211,\n" +
+                "        \"update_date\": \"2024-07-10T17:01:21.401890\",\n" +
+                "        \"available\": true\n" +
+                "      }\n" +
+                "    ],\n" +
+                "    \"Youdao\": [\n" +
+                "      {\n" +
+                "        \"llm_name\": \"maidalun1020/bce-embedding-base_v1\",\n" +
+                "        \"mdl_type\": \"embedding\",\n" +
+                "        \"fid\": \"Youdao\",\n" +
+                "        \"max_tokens\": 512,\n" +
+                "        \"tags\": \"TEXT EMBEDDING,\",\n" +
+                "        \"status\": \"1\",\n" +
+                "        \"id\": \"48f19e2b-f2d7-4849-98b7-75785f99eb3a\",\n" +
+                "        \"create_time\": 1720602087224,\n" +
+                "        \"create_date\": \"2024-07-10T17:01:21.401772\",\n" +
+                "        \"update_time\": 1720602087224,\n" +
+                "        \"update_date\": \"2024-07-10T17:01:21.401890\",\n" +
+                "        \"available\": true\n" +
+                "      },\n" +
+                "      {\n" +
+                "        \"llm_name\": \"maidalun1020/bce-reranker-base_v1\",\n" +
+                "        \"mdl_type\": \"rerank\",\n" +
+                "        \"fid\": \"Youdao\",\n" +
+                "        \"max_tokens\": 512,\n" +
+                "        \"tags\": \"RE-RANK, 512\",\n" +
+                "        \"status\": \"1\",\n" +
+                "        \"id\": \"4108b7b1-e0f4-4f91-9e6a-fff1b5f389b7\",\n" +
+                "        \"create_time\": 1720602087238,\n" +
+                "        \"create_date\": \"2024-07-10T17:01:21.401772\",\n" +
+                "        \"update_time\": 1720602087238,\n" +
+                "        \"update_date\": \"2024-07-10T17:01:21.401890\",\n" +
+                "        \"available\": true\n" +
+                "      }\n" +
+                "    ],\n" +
+                "    \"DeepSeek\": [\n" +
+                "      {\n" +
+                "        \"llm_name\": \"deepseek-chat\",\n" +
+                "        \"mdl_type\": \"chat\",\n" +
+                "        \"fid\": \"DeepSeek\",\n" +
+                "        \"max_tokens\": 32768,\n" +
+                "        \"tags\": \"LLM,CHAT,\",\n" +
+                "        \"status\": \"1\",\n" +
+                "        \"id\": \"0b86745b-5d5c-41a8-8485-8af27a452cec\",\n" +
+                "        \"create_time\": 1720602087252,\n" +
+                "        \"create_date\": \"2024-07-10T17:01:21.401772\",\n" +
+                "        \"update_time\": 1720602087252,\n" +
+                "        \"update_date\": \"2024-07-10T17:01:21.401890\",\n" +
+                "        \"available\": false\n" +
+                "      },\n" +
+                "      {\n" +
+                "        \"llm_name\": \"deepseek-coder\",\n" +
+                "        \"mdl_type\": \"chat\",\n" +
+                "        \"fid\": \"DeepSeek\",\n" +
+                "        \"max_tokens\": 16385,\n" +
+                "        \"tags\": \"LLM,CHAT,\",\n" +
+                "        \"status\": \"1\",\n" +
+                "        \"id\": \"9101b8c9-91be-4e3a-bff7-dae95e284a34\",\n" +
+                "        \"create_time\": 1720602087265,\n" +
+                "        \"create_date\": \"2024-07-10T17:01:21.401772\",\n" +
+                "        \"update_time\": 1720602087265,\n" +
+                "        \"update_date\": \"2024-07-10T17:01:21.401890\",\n" +
+                "        \"available\": false\n" +
+                "      }\n" +
+                "    ],\n" +
+                "    \"VolcEngine\": [\n" +
+                "      {\n" +
+                "        \"llm_name\": \"Skylark2-pro-32k\",\n" +
+                "        \"mdl_type\": \"chat\",\n" +
+                "        \"fid\": \"VolcEngine\",\n" +
+                "        \"max_tokens\": 32768,\n" +
+                "        \"tags\": \"LLM,CHAT,32k\",\n" +
+                "        \"status\": \"1\",\n" +
+                "        \"id\": \"605722d9-bc19-4d65-9803-94b3b74b9dda\",\n" +
+                "        \"create_time\": 1720602087279,\n" +
+                "        \"create_date\": \"2024-07-10T17:01:21.401772\",\n" +
+                "        \"update_time\": 1720602087279,\n" +
+                "        \"update_date\": \"2024-07-10T17:01:21.401890\",\n" +
+                "        \"available\": false\n" +
+                "      },\n" +
+                "      {\n" +
+                "        \"llm_name\": \"Skylark2-pro-4k\",\n" +
+                "        \"mdl_type\": \"chat\",\n" +
+                "        \"fid\": \"VolcEngine\",\n" +
+                "        \"max_tokens\": 4096,\n" +
+                "        \"tags\": \"LLM,CHAT,4k\",\n" +
+                "        \"status\": \"1\",\n" +
+                "        \"id\": \"90f7ec91-1434-4df4-a2e5-2d4693a94b64\",\n" +
+                "        \"create_time\": 1720602087295,\n" +
+                "        \"create_date\": \"2024-07-10T17:01:21.401772\",\n" +
+                "        \"update_time\": 1720602087295,\n" +
+                "        \"update_date\": \"2024-07-10T17:01:21.401890\",\n" +
+                "        \"available\": false\n" +
+                "      }\n" +
+                "    ],\n" +
+                "    \"BaiChuan\": [\n" +
+                "      {\n" +
+                "        \"llm_name\": \"Baichuan2-Turbo\",\n" +
+                "        \"mdl_type\": \"chat\",\n" +
+                "        \"fid\": \"BaiChuan\",\n" +
+                "        \"max_tokens\": 32768,\n" +
+                "        \"tags\": \"LLM,CHAT,32K\",\n" +
+                "        \"status\": \"1\",\n" +
+                "        \"id\": \"dc94dfa1-17af-42be-b70c-5a3c1beec588\",\n" +
+                "        \"create_time\": 1720602087309,\n" +
+                "        \"create_date\": \"2024-07-10T17:01:21.401772\",\n" +
+                "        \"update_time\": 1720602087309,\n" +
+                "        \"update_date\": \"2024-07-10T17:01:21.401890\",\n" +
+                "        \"available\": false\n" +
+                "      },\n" +
+                "      {\n" +
+                "        \"llm_name\": \"Baichuan2-Turbo-192k\",\n" +
+                "        \"mdl_type\": \"chat\",\n" +
+                "        \"fid\": \"BaiChuan\",\n" +
+                "        \"max_tokens\": 196608,\n" +
+                "        \"tags\": \"LLM,CHAT,192K\",\n" +
+                "        \"status\": \"1\",\n" +
+                "        \"id\": \"6efc797a-4d68-4add-bea8-8429e6c4f728\",\n" +
+                "        \"create_time\": 1720602087323,\n" +
+                "        \"create_date\": \"2024-07-10T17:01:21.401772\",\n" +
+                "        \"update_time\": 1720602087323,\n" +
+                "        \"update_date\": \"2024-07-10T17:01:21.401890\",\n" +
+                "        \"available\": false\n" +
+                "      },\n" +
+                "      {\n" +
+                "        \"llm_name\": \"Baichuan3-Turbo\",\n" +
+                "        \"mdl_type\": \"chat\",\n" +
+                "        \"fid\": \"BaiChuan\",\n" +
+                "        \"max_tokens\": 32768,\n" +
+                "        \"tags\": \"LLM,CHAT,32K\",\n" +
+                "        \"status\": \"1\",\n" +
+                "        \"id\": \"4b4ef412-bd68-4fb7-bfff-2feb5f8412ae\",\n" +
+                "        \"create_time\": 1720602087337,\n" +
+                "        \"create_date\": \"2024-07-10T17:01:21.401772\",\n" +
+                "        \"update_time\": 1720602087337,\n" +
+                "        \"update_date\": \"2024-07-10T17:01:21.401890\",\n" +
+                "        \"available\": false\n" +
+                "      },\n" +
+                "      {\n" +
+                "        \"llm_name\": \"Baichuan3-Turbo-128k\",\n" +
+                "        \"mdl_type\": \"chat\",\n" +
+                "        \"fid\": \"BaiChuan\",\n" +
+                "        \"max_tokens\": 131072,\n" +
+                "        \"tags\": \"LLM,CHAT,128K\",\n" +
+                "        \"status\": \"1\",\n" +
+                "        \"id\": \"0023f911-9272-48bf-91b6-be070e8f0bee\",\n" +
+                "        \"create_time\": 1720602087350,\n" +
+                "        \"create_date\": \"2024-07-10T17:01:21.401772\",\n" +
+                "        \"update_time\": 1720602087350,\n" +
+                "        \"update_date\": \"2024-07-10T17:01:21.401890\",\n" +
+                "        \"available\": false\n" +
+                "      },\n" +
+                "      {\n" +
+                "        \"llm_name\": \"Baichuan4\",\n" +
+                "        \"mdl_type\": \"chat\",\n" +
+                "        \"fid\": \"BaiChuan\",\n" +
+                "        \"max_tokens\": 131072,\n" +
+                "        \"tags\": \"LLM,CHAT,128K\",\n" +
+                "        \"status\": \"1\",\n" +
+                "        \"id\": \"ca41cb85-0cd0-4055-ad28-7f0982f49b3f\",\n" +
+                "        \"create_time\": 1720602087364,\n" +
+                "        \"create_date\": \"2024-07-10T17:01:21.401772\",\n" +
+                "        \"update_time\": 1720602087364,\n" +
+                "        \"update_date\": \"2024-07-10T17:01:21.401890\",\n" +
+                "        \"available\": false\n" +
+                "      },\n" +
+                "      {\n" +
+                "        \"llm_name\": \"Baichuan-Text-Embedding\",\n" +
+                "        \"mdl_type\": \"embedding\",\n" +
+                "        \"fid\": \"BaiChuan\",\n" +
+                "        \"max_tokens\": 512,\n" +
+                "        \"tags\": \"TEXT EMBEDDING\",\n" +
+                "        \"status\": \"1\",\n" +
+                "        \"id\": \"7ed51866-622c-4644-922b-bed06fd1d9d7\",\n" +
+                "        \"create_time\": 1720602087378,\n" +
+                "        \"create_date\": \"2024-07-10T17:01:21.401772\",\n" +
+                "        \"update_time\": 1720602087378,\n" +
+                "        \"update_date\": \"2024-07-10T17:01:21.401890\",\n" +
+                "        \"available\": false\n" +
+                "      }\n" +
+                "    ],\n" +
+                "    \"Jina\": [\n" +
+                "      {\n" +
+                "        \"llm_name\": \"jina-reranker-v1-base-en\",\n" +
+                "        \"mdl_type\": \"rerank\",\n" +
+                "        \"fid\": \"Jina\",\n" +
+                "        \"max_tokens\": 8196,\n" +
+                "        \"tags\": \"RE-RANK,8k\",\n" +
+                "        \"status\": \"1\",\n" +
+                "        \"id\": \"c1775547-b4c4-4352-9fa4-9c07dce855d5\",\n" +
+                "        \"create_time\": 1720602087391,\n" +
+                "        \"create_date\": \"2024-07-10T17:01:21.401772\",\n" +
+                "        \"update_time\": 1720602087391,\n" +
+                "        \"update_date\": \"2024-07-10T17:01:21.401890\",\n" +
+                "        \"available\": false\n" +
+                "      },\n" +
+                "      {\n" +
+                "        \"llm_name\": \"jina-reranker-v1-turbo-en\",\n" +
+                "        \"mdl_type\": \"rerank\",\n" +
+                "        \"fid\": \"Jina\",\n" +
+                "        \"max_tokens\": 8196,\n" +
+                "        \"tags\": \"RE-RANK,8k\",\n" +
+                "        \"status\": \"1\",\n" +
+                "        \"id\": \"40da1cde-a4f3-429d-ae4e-3e248d250972\",\n" +
+                "        \"create_time\": 1720602087405,\n" +
+                "        \"create_date\": \"2024-07-10T17:01:21.401772\",\n" +
+                "        \"update_time\": 1720602087405,\n" +
+                "        \"update_date\": \"2024-07-10T17:01:21.401890\",\n" +
+                "        \"available\": false\n" +
+                "      },\n" +
+                "      {\n" +
+                "        \"llm_name\": \"jina-reranker-v1-tiny-en\",\n" +
+                "        \"mdl_type\": \"rerank\",\n" +
+                "        \"fid\": \"Jina\",\n" +
+                "        \"max_tokens\": 8196,\n" +
+                "        \"tags\": \"RE-RANK,8k\",\n" +
+                "        \"status\": \"1\",\n" +
+                "        \"id\": \"3a16b281-67d9-47f2-b814-3c4a80fb7ca6\",\n" +
+                "        \"create_time\": 1720602087419,\n" +
+                "        \"create_date\": \"2024-07-10T17:01:21.401772\",\n" +
+                "        \"update_time\": 1720602087419,\n" +
+                "        \"update_date\": \"2024-07-10T17:01:21.401890\",\n" +
+                "        \"available\": false\n" +
+                "      },\n" +
+                "      {\n" +
+                "        \"llm_name\": \"jina-colbert-v1-en\",\n" +
+                "        \"mdl_type\": \"rerank\",\n" +
+                "        \"fid\": \"Jina\",\n" +
+                "        \"max_tokens\": 8196,\n" +
+                "        \"tags\": \"RE-RANK,8k\",\n" +
+                "        \"status\": \"1\",\n" +
+                "        \"id\": \"654a8707-8209-4b08-9e88-ffa8e28ceaab\",\n" +
+                "        \"create_time\": 1720602087433,\n" +
+                "        \"create_date\": \"2024-07-10T17:01:21.401772\",\n" +
+                "        \"update_time\": 1720602087433,\n" +
+                "        \"update_date\": \"2024-07-10T17:01:21.401890\",\n" +
+                "        \"available\": false\n" +
+                "      },\n" +
+                "      {\n" +
+                "        \"llm_name\": \"jina-embeddings-v2-base-en\",\n" +
+                "        \"mdl_type\": \"embedding\",\n" +
+                "        \"fid\": \"Jina\",\n" +
+                "        \"max_tokens\": 8196,\n" +
+                "        \"tags\": \"TEXT EMBEDDING\",\n" +
+                "        \"status\": \"1\",\n" +
+                "        \"id\": \"8672dce8-3965-4faf-a038-d91f6d8fbba5\",\n" +
+                "        \"create_time\": 1720602087446,\n" +
+                "        \"create_date\": \"2024-07-10T17:01:21.401772\",\n" +
+                "        \"update_time\": 1720602087446,\n" +
+                "        \"update_date\": \"2024-07-10T17:01:21.401890\",\n" +
+                "        \"available\": false\n" +
+                "      },\n" +
+                "      {\n" +
+                "        \"llm_name\": \"jina-embeddings-v2-base-de\",\n" +
+                "        \"mdl_type\": \"embedding\",\n" +
+                "        \"fid\": \"Jina\",\n" +
+                "        \"max_tokens\": 8196,\n" +
+                "        \"tags\": \"TEXT EMBEDDING\",\n" +
+                "        \"status\": \"1\",\n" +
+                "        \"id\": \"c5e8dfba-33c0-429e-bad4-b8c0ee0b0066\",\n" +
+                "        \"create_time\": 1720602087460,\n" +
+                "        \"create_date\": \"2024-07-10T17:01:21.401772\",\n" +
+                "        \"update_time\": 1720602087460,\n" +
+                "        \"update_date\": \"2024-07-10T17:01:21.401890\",\n" +
+                "        \"available\": false\n" +
+                "      },\n" +
+                "      {\n" +
+                "        \"llm_name\": \"jina-embeddings-v2-base-es\",\n" +
+                "        \"mdl_type\": \"embedding\",\n" +
+                "        \"fid\": \"Jina\",\n" +
+                "        \"max_tokens\": 8196,\n" +
+                "        \"tags\": \"TEXT EMBEDDING\",\n" +
+                "        \"status\": \"1\",\n" +
+                "        \"id\": \"36ded98b-0e68-4841-89f6-8ff1187e3a29\",\n" +
+                "        \"create_time\": 1720602087474,\n" +
+                "        \"create_date\": \"2024-07-10T17:01:21.401772\",\n" +
+                "        \"update_time\": 1720602087474,\n" +
+                "        \"update_date\": \"2024-07-10T17:01:21.401890\",\n" +
+                "        \"available\": false\n" +
+                "      },\n" +
+                "      {\n" +
+                "        \"llm_name\": \"jina-embeddings-v2-base-code\",\n" +
+                "        \"mdl_type\": \"embedding\",\n" +
+                "        \"fid\": \"Jina\",\n" +
+                "        \"max_tokens\": 8196,\n" +
+                "        \"tags\": \"TEXT EMBEDDING\",\n" +
+                "        \"status\": \"1\",\n" +
+                "        \"id\": \"bb4c5390-c077-4240-ad3d-eff9c866bc92\",\n" +
+                "        \"create_time\": 1720602087488,\n" +
+                "        \"create_date\": \"2024-07-10T17:01:21.401772\",\n" +
+                "        \"update_time\": 1720602087488,\n" +
+                "        \"update_date\": \"2024-07-10T17:01:21.401890\",\n" +
+                "        \"available\": false\n" +
+                "      },\n" +
+                "      {\n" +
+                "        \"llm_name\": \"jina-embeddings-v2-base-zh\",\n" +
+                "        \"mdl_type\": \"embedding\",\n" +
+                "        \"fid\": \"Jina\",\n" +
+                "        \"max_tokens\": 8196,\n" +
+                "        \"tags\": \"TEXT EMBEDDING\",\n" +
+                "        \"status\": \"1\",\n" +
+                "        \"id\": \"b2f38106-fafd-43f2-b6be-4819693c6ae0\",\n" +
+                "        \"create_time\": 1720602087502,\n" +
+                "        \"create_date\": \"2024-07-10T17:01:21.401772\",\n" +
+                "        \"update_time\": 1720602087502,\n" +
+                "        \"update_date\": \"2024-07-10T17:01:21.401890\",\n" +
+                "        \"available\": false\n" +
+                "      }\n" +
+                "    ],\n" +
+                "    \"BAAI\": [\n" +
+                "      {\n" +
+                "        \"llm_name\": \"BAAI/bge-large-zh-v1.5\",\n" +
+                "        \"mdl_type\": \"embedding\",\n" +
+                "        \"fid\": \"BAAI\",\n" +
+                "        \"max_tokens\": 1024,\n" +
+                "        \"tags\": \"TEXT EMBEDDING,\",\n" +
+                "        \"status\": \"1\",\n" +
+                "        \"id\": \"c94b5007-5a0c-4934-b877-15b843cbea57\",\n" +
+                "        \"create_time\": 1720602087518,\n" +
+                "        \"create_date\": \"2024-07-10T17:01:21.401772\",\n" +
+                "        \"update_time\": 1720602087518,\n" +
+                "        \"update_date\": \"2024-07-10T17:01:21.401890\",\n" +
+                "        \"available\": true\n" +
+                "      },\n" +
+                "      {\n" +
+                "        \"llm_name\": \"BAAI/bge-reranker-v2-m3\",\n" +
+                "        \"mdl_type\": \"rerank\",\n" +
+                "        \"fid\": \"BAAI\",\n" +
+                "        \"max_tokens\": 2048,\n" +
+                "        \"tags\": \"RE-RANK,2k\",\n" +
+                "        \"status\": \"1\",\n" +
+                "        \"id\": \"e3d07025-43cb-409e-afe0-31158ebae8e2\",\n" +
+                "        \"create_time\": 1720602087532,\n" +
+                "        \"create_date\": \"2024-07-10T17:01:21.401772\",\n" +
+                "        \"update_time\": 1720602087532,\n" +
+                "        \"update_date\": \"2024-07-10T17:01:21.401890\",\n" +
+                "        \"available\": true\n" +
+                "      }\n" +
+                "    ],\n" +
+                "    \"MiniMax\": [\n" +
+                "      {\n" +
+                "        \"llm_name\": \"abab6.5-chat\",\n" +
+                "        \"mdl_type\": \"chat\",\n" +
+                "        \"fid\": \"MiniMax\",\n" +
+                "        \"max_tokens\": 8192,\n" +
+                "        \"tags\": \"LLM,CHAT,8k\",\n" +
+                "        \"status\": \"1\",\n" +
+                "        \"id\": \"e39a8921-10ac-4544-9f6c-c97a0d24413d\",\n" +
+                "        \"create_time\": 1720602087545,\n" +
+                "        \"create_date\": \"2024-07-10T17:01:21.401772\",\n" +
+                "        \"update_time\": 1720602087545,\n" +
+                "        \"update_date\": \"2024-07-10T17:01:21.401890\",\n" +
+                "        \"available\": false\n" +
+                "      },\n" +
+                "      {\n" +
+                "        \"llm_name\": \"abab6.5s-chat\",\n" +
+                "        \"mdl_type\": \"chat\",\n" +
+                "        \"fid\": \"MiniMax\",\n" +
+                "        \"max_tokens\": 245760,\n" +
+                "        \"tags\": \"LLM,CHAT,245k\",\n" +
+                "        \"status\": \"1\",\n" +
+                "        \"id\": \"2696087c-6edf-48aa-9946-25637bb329bf\",\n" +
+                "        \"create_time\": 1720602087559,\n" +
+                "        \"create_date\": \"2024-07-10T17:01:21.401772\",\n" +
+                "        \"update_time\": 1720602087559,\n" +
+                "        \"update_date\": \"2024-07-10T17:01:21.401890\",\n" +
+                "        \"available\": false\n" +
+                "      },\n" +
+                "      {\n" +
+                "        \"llm_name\": \"abab6.5t-chat\",\n" +
+                "        \"mdl_type\": \"chat\",\n" +
+                "        \"fid\": \"MiniMax\",\n" +
+                "        \"max_tokens\": 8192,\n" +
+                "        \"tags\": \"LLM,CHAT,8k\",\n" +
+                "        \"status\": \"1\",\n" +
+                "        \"id\": \"d47df8da-cc67-4c11-b47a-d5d3aa3a4a0f\",\n" +
+                "        \"create_time\": 1720602087573,\n" +
+                "        \"create_date\": \"2024-07-10T17:01:21.401772\",\n" +
+                "        \"update_time\": 1720602087573,\n" +
+                "        \"update_date\": \"2024-07-10T17:01:21.401890\",\n" +
+                "        \"available\": false\n" +
+                "      },\n" +
+                "      {\n" +
+                "        \"llm_name\": \"abab6.5g-chat\",\n" +
+                "        \"mdl_type\": \"chat\",\n" +
+                "        \"fid\": \"MiniMax\",\n" +
+                "        \"max_tokens\": 8192,\n" +
+                "        \"tags\": \"LLM,CHAT,8k\",\n" +
+                "        \"status\": \"1\",\n" +
+                "        \"id\": \"da84ded6-d35d-42dc-94ed-a52c2327e5cb\",\n" +
+                "        \"create_time\": 1720602087586,\n" +
+                "        \"create_date\": \"2024-07-10T17:01:21.401772\",\n" +
+                "        \"update_time\": 1720602087586,\n" +
+                "        \"update_date\": \"2024-07-10T17:01:21.401890\",\n" +
+                "        \"available\": false\n" +
+                "      },\n" +
+                "      {\n" +
+                "        \"llm_name\": \"abab5.5-chat\",\n" +
+                "        \"mdl_type\": \"chat\",\n" +
+                "        \"fid\": \"MiniMax\",\n" +
+                "        \"max_tokens\": 16384,\n" +
+                "        \"tags\": \"LLM,CHAT,16k\",\n" +
+                "        \"status\": \"1\",\n" +
+                "        \"id\": \"2224aeb1-b93c-4e08-a156-84873bdece11\",\n" +
+                "        \"create_time\": 1720602087602,\n" +
+                "        \"create_date\": \"2024-07-10T17:01:21.401772\",\n" +
+                "        \"update_time\": 1720602087602,\n" +
+                "        \"update_date\": \"2024-07-10T17:01:21.401890\",\n" +
+                "        \"available\": false\n" +
+                "      },\n" +
+                "      {\n" +
+                "        \"llm_name\": \"abab5.5s-chat\",\n" +
+                "        \"mdl_type\": \"chat\",\n" +
+                "        \"fid\": \"MiniMax\",\n" +
+                "        \"max_tokens\": 8192,\n" +
+                "        \"tags\": \"LLM,CHAT,8k\",\n" +
+                "        \"status\": \"1\",\n" +
+                "        \"id\": \"44bde59c-88ca-4e7e-81ba-34819446b46e\",\n" +
+                "        \"create_time\": 1720602087616,\n" +
+                "        \"create_date\": \"2024-07-10T17:01:21.401772\",\n" +
+                "        \"update_time\": 1720602087616,\n" +
+                "        \"update_date\": \"2024-07-10T17:01:21.401890\",\n" +
+                "        \"available\": false\n" +
+                "      }\n" +
+                "    ],\n" +
+                "    \"Mistral\": [\n" +
+                "      {\n" +
+                "        \"llm_name\": \"open-mixtral-8x22b\",\n" +
+                "        \"mdl_type\": \"chat\",\n" +
+                "        \"fid\": \"Mistral\",\n" +
+                "        \"max_tokens\": 64000,\n" +
+                "        \"tags\": \"LLM,CHAT,64k\",\n" +
+                "        \"status\": \"1\",\n" +
+                "        \"id\": \"6f245ab2-56cf-4c3f-b626-0c9a09503b92\",\n" +
+                "        \"create_time\": 1720602087629,\n" +
+                "        \"create_date\": \"2024-07-10T17:01:21.401772\",\n" +
+                "        \"update_time\": 1720602087629,\n" +
+                "        \"update_date\": \"2024-07-10T17:01:21.401890\",\n" +
+                "        \"available\": false\n" +
+                "      },\n" +
+                "      {\n" +
+                "        \"llm_name\": \"open-mixtral-8x7b\",\n" +
+                "        \"mdl_type\": \"chat\",\n" +
+                "        \"fid\": \"Mistral\",\n" +
+                "        \"max_tokens\": 32000,\n" +
+                "        \"tags\": \"LLM,CHAT,32k\",\n" +
+                "        \"status\": \"1\",\n" +
+                "        \"id\": \"3e3506cb-5983-4a42-9bbc-0fee484d081f\",\n" +
+                "        \"create_time\": 1720602087644,\n" +
+                "        \"create_date\": \"2024-07-10T17:01:21.401772\",\n" +
+                "        \"update_time\": 1720602087644,\n" +
+                "        \"update_date\": \"2024-07-10T17:01:21.401890\",\n" +
+                "        \"available\": false\n" +
+                "      },\n" +
+                "      {\n" +
+                "        \"llm_name\": \"open-mistral-7b\",\n" +
+                "        \"mdl_type\": \"chat\",\n" +
+                "        \"fid\": \"Mistral\",\n" +
+                "        \"max_tokens\": 32000,\n" +
+                "        \"tags\": \"LLM,CHAT,32k\",\n" +
+                "        \"status\": \"1\",\n" +
+                "        \"id\": \"64e3df18-6f68-4c55-8a9e-608e884cc6d3\",\n" +
+                "        \"create_time\": 1720602087657,\n" +
+                "        \"create_date\": \"2024-07-10T17:01:21.401772\",\n" +
+                "        \"update_time\": 1720602087657,\n" +
+                "        \"update_date\": \"2024-07-10T17:01:21.401890\",\n" +
+                "        \"available\": false\n" +
+                "      },\n" +
+                "      {\n" +
+                "        \"llm_name\": \"mistral-large-latest\",\n" +
+                "        \"mdl_type\": \"chat\",\n" +
+                "        \"fid\": \"Mistral\",\n" +
+                "        \"max_tokens\": 32000,\n" +
+                "        \"tags\": \"LLM,CHAT,32k\",\n" +
+                "        \"status\": \"1\",\n" +
+                "        \"id\": \"e68a3c6f-c0e7-45c1-a434-218333bfc7cf\",\n" +
+                "        \"create_time\": 1720602087671,\n" +
+                "        \"create_date\": \"2024-07-10T17:01:21.401772\",\n" +
+                "        \"update_time\": 1720602087671,\n" +
+                "        \"update_date\": \"2024-07-10T17:01:21.401890\",\n" +
+                "        \"available\": false\n" +
+                "      },\n" +
+                "      {\n" +
+                "        \"llm_name\": \"mistral-small-latest\",\n" +
+                "        \"mdl_type\": \"chat\",\n" +
+                "        \"fid\": \"Mistral\",\n" +
+                "        \"max_tokens\": 32000,\n" +
+                "        \"tags\": \"LLM,CHAT,32k\",\n" +
+                "        \"status\": \"1\",\n" +
+                "        \"id\": \"a5caff6b-ede3-41f7-a25d-9085d7fa7dc5\",\n" +
+                "        \"create_time\": 1720602087687,\n" +
+                "        \"create_date\": \"2024-07-10T17:01:21.401772\",\n" +
+                "        \"update_time\": 1720602087687,\n" +
+                "        \"update_date\": \"2024-07-10T17:01:21.401890\",\n" +
+                "        \"available\": false\n" +
+                "      },\n" +
+                "      {\n" +
+                "        \"llm_name\": \"mistral-medium-latest\",\n" +
+                "        \"mdl_type\": \"chat\",\n" +
+                "        \"fid\": \"Mistral\",\n" +
+                "        \"max_tokens\": 32000,\n" +
+                "        \"tags\": \"LLM,CHAT,32k\",\n" +
+                "        \"status\": \"1\",\n" +
+                "        \"id\": \"a50ba81e-1a70-42f3-9a30-ec21c69c1fa3\",\n" +
+                "        \"create_time\": 1720602087700,\n" +
+                "        \"create_date\": \"2024-07-10T17:01:21.401772\",\n" +
+                "        \"update_time\": 1720602087700,\n" +
+                "        \"update_date\": \"2024-07-10T17:01:21.401890\",\n" +
+                "        \"available\": false\n" +
+                "      },\n" +
+                "      {\n" +
+                "        \"llm_name\": \"codestral-latest\",\n" +
+                "        \"mdl_type\": \"chat\",\n" +
+                "        \"fid\": \"Mistral\",\n" +
+                "        \"max_tokens\": 32000,\n" +
+                "        \"tags\": \"LLM,CHAT,32k\",\n" +
+                "        \"status\": \"1\",\n" +
+                "        \"id\": \"9cca020b-550a-42a9-a060-c4c55ede40a4\",\n" +
+                "        \"create_time\": 1720602087714,\n" +
+                "        \"create_date\": \"2024-07-10T17:01:21.401772\",\n" +
+                "        \"update_time\": 1720602087714,\n" +
+                "        \"update_date\": \"2024-07-10T17:01:21.401890\",\n" +
+                "        \"available\": false\n" +
+                "      },\n" +
+                "      {\n" +
+                "        \"llm_name\": \"mistral-embed\",\n" +
+                "        \"mdl_type\": \"embedding\",\n" +
+                "        \"fid\": \"Mistral\",\n" +
+                "        \"max_tokens\": 8192,\n" +
+                "        \"tags\": \"LLM,CHAT,8k\",\n" +
+                "        \"status\": \"1\",\n" +
+                "        \"id\": \"cf0f7e3a-ab2e-42e0-abf2-fdec51fbee8a\",\n" +
+                "        \"create_time\": 1720602087727,\n" +
+                "        \"create_date\": \"2024-07-10T17:01:21.401772\",\n" +
+                "        \"update_time\": 1720602087727,\n" +
+                "        \"update_date\": \"2024-07-10T17:01:21.401890\",\n" +
+                "        \"available\": false\n" +
+                "      }\n" +
+                "    ],\n" +
+                "    \"Azure-OpenAI\": [\n" +
+                "      {\n" +
+                "        \"llm_name\": \"azure-gpt-4o\",\n" +
+                "        \"mdl_type\": \"chat,image2text\",\n" +
+                "        \"fid\": \"Azure-OpenAI\",\n" +
+                "        \"max_tokens\": 128000,\n" +
+                "        \"tags\": \"LLM,CHAT,128K\",\n" +
+                "        \"status\": \"1\",\n" +
+                "        \"id\": \"1b81d463-214a-450d-9251-77834c32caac\",\n" +
+                "        \"create_time\": 1720602087741,\n" +
+                "        \"create_date\": \"2024-07-10T17:01:21.401772\",\n" +
+                "        \"update_time\": 1720602087741,\n" +
+                "        \"update_date\": \"2024-07-10T17:01:21.401890\",\n" +
+                "        \"available\": false\n" +
+                "      },\n" +
+                "      {\n" +
+                "        \"llm_name\": \"azure-gpt-35-turbo\",\n" +
+                "        \"mdl_type\": \"chat\",\n" +
+                "        \"fid\": \"Azure-OpenAI\",\n" +
+                "        \"max_tokens\": 4096,\n" +
+                "        \"tags\": \"LLM,CHAT,4K\",\n" +
+                "        \"status\": \"1\",\n" +
+                "        \"id\": \"7f42e3e1-26de-4ea8-9931-dffa6a17c232\",\n" +
+                "        \"create_time\": 1720602087755,\n" +
+                "        \"create_date\": \"2024-07-10T17:01:21.401772\",\n" +
+                "        \"update_time\": 1720602087755,\n" +
+                "        \"update_date\": \"2024-07-10T17:01:21.401890\",\n" +
+                "        \"available\": false\n" +
+                "      },\n" +
+                "      {\n" +
+                "        \"llm_name\": \"azure-gpt-35-turbo-16k\",\n" +
+                "        \"mdl_type\": \"chat\",\n" +
+                "        \"fid\": \"Azure-OpenAI\",\n" +
+                "        \"max_tokens\": 16385,\n" +
+                "        \"tags\": \"LLM,CHAT,16k\",\n" +
+                "        \"status\": \"1\",\n" +
+                "        \"id\": \"a5725596-ea0f-4461-a718-50da60f88c2b\",\n" +
+                "        \"create_time\": 1720602087769,\n" +
+                "        \"create_date\": \"2024-07-10T17:01:21.401772\",\n" +
+                "        \"update_time\": 1720602087769,\n" +
+                "        \"update_date\": \"2024-07-10T17:01:21.401890\",\n" +
+                "        \"available\": false\n" +
+                "      },\n" +
+                "      {\n" +
+                "        \"llm_name\": \"azure-text-embedding-ada-002\",\n" +
+                "        \"mdl_type\": \"embedding\",\n" +
+                "        \"fid\": \"Azure-OpenAI\",\n" +
+                "        \"max_tokens\": 8191,\n" +
+                "        \"tags\": \"TEXT EMBEDDING,8K\",\n" +
+                "        \"status\": \"1\",\n" +
+                "        \"id\": \"7bdca174-2d2e-4200-b9eb-7efec44f2bbb\",\n" +
+                "        \"create_time\": 1720602087782,\n" +
+                "        \"create_date\": \"2024-07-10T17:01:21.401772\",\n" +
+                "        \"update_time\": 1720602087782,\n" +
+                "        \"update_date\": \"2024-07-10T17:01:21.401890\",\n" +
+                "        \"available\": false\n" +
+                "      },\n" +
+                "      {\n" +
+                "        \"llm_name\": \"azure-text-embedding-3-small\",\n" +
+                "        \"mdl_type\": \"embedding\",\n" +
+                "        \"fid\": \"Azure-OpenAI\",\n" +
+                "        \"max_tokens\": 8191,\n" +
+                "        \"tags\": \"TEXT EMBEDDING,8K\",\n" +
+                "        \"status\": \"1\",\n" +
+                "        \"id\": \"30d7e037-b9e4-46c8-bb91-48e6eef04c43\",\n" +
+                "        \"create_time\": 1720602087796,\n" +
+                "        \"create_date\": \"2024-07-10T17:01:21.401772\",\n" +
+                "        \"update_time\": 1720602087796,\n" +
+                "        \"update_date\": \"2024-07-10T17:01:21.401890\",\n" +
+                "        \"available\": false\n" +
+                "      },\n" +
+                "      {\n" +
+                "        \"llm_name\": \"azure-text-embedding-3-large\",\n" +
+                "        \"mdl_type\": \"embedding\",\n" +
+                "        \"fid\": \"Azure-OpenAI\",\n" +
+                "        \"max_tokens\": 8191,\n" +
+                "        \"tags\": \"TEXT EMBEDDING,8K\",\n" +
+                "        \"status\": \"1\",\n" +
+                "        \"id\": \"a2887ccb-37f5-45a9-8e2b-96537e7f6317\",\n" +
+                "        \"create_time\": 1720602087810,\n" +
+                "        \"create_date\": \"2024-07-10T17:01:21.401772\",\n" +
+                "        \"update_time\": 1720602087810,\n" +
+                "        \"update_date\": \"2024-07-10T17:01:21.401890\",\n" +
+                "        \"available\": false\n" +
+                "      },\n" +
+                "      {\n" +
+                "        \"llm_name\": \"azure-whisper-1\",\n" +
+                "        \"mdl_type\": \"speech2text\",\n" +
+                "        \"fid\": \"Azure-OpenAI\",\n" +
+                "        \"max_tokens\": 26214400,\n" +
+                "        \"tags\": \"SPEECH2TEXT\",\n" +
+                "        \"status\": \"1\",\n" +
+                "        \"id\": \"323ed8bc-156c-4358-86cb-5e1b7c8324b1\",\n" +
+                "        \"create_time\": 1720602087825,\n" +
+                "        \"create_date\": \"2024-07-10T17:01:21.401772\",\n" +
+                "        \"update_time\": 1720602087825,\n" +
+                "        \"update_date\": \"2024-07-10T17:01:21.401890\",\n" +
+                "        \"available\": false\n" +
+                "      },\n" +
+                "      {\n" +
+                "        \"llm_name\": \"azure-gpt-4\",\n" +
+                "        \"mdl_type\": \"chat\",\n" +
+                "        \"fid\": \"Azure-OpenAI\",\n" +
+                "        \"max_tokens\": 8191,\n" +
+                "        \"tags\": \"LLM,CHAT,8K\",\n" +
+                "        \"status\": \"1\",\n" +
+                "        \"id\": \"20f8e56f-2aad-40d9-ab31-09d05242c75a\",\n" +
+                "        \"create_time\": 1720602087840,\n" +
+                "        \"create_date\": \"2024-07-10T17:01:21.401772\",\n" +
+                "        \"update_time\": 1720602087840,\n" +
+                "        \"update_date\": \"2024-07-10T17:01:21.401890\",\n" +
+                "        \"available\": false\n" +
+                "      },\n" +
+                "      {\n" +
+                "        \"llm_name\": \"azure-gpt-4-turbo\",\n" +
+                "        \"mdl_type\": \"chat\",\n" +
+                "        \"fid\": \"Azure-OpenAI\",\n" +
+                "        \"max_tokens\": 8191,\n" +
+                "        \"tags\": \"LLM,CHAT,8K\",\n" +
+                "        \"status\": \"1\",\n" +
+                "        \"id\": \"cf29e01c-c17f-4c1d-a479-3d9a9956e21c\",\n" +
+                "        \"create_time\": 1720602087853,\n" +
+                "        \"create_date\": \"2024-07-10T17:01:21.401772\",\n" +
+                "        \"update_time\": 1720602087853,\n" +
+                "        \"update_date\": \"2024-07-10T17:01:21.401890\",\n" +
+                "        \"available\": false\n" +
+                "      },\n" +
+                "      {\n" +
+                "        \"llm_name\": \"azure-gpt-4-32k\",\n" +
+                "        \"mdl_type\": \"chat\",\n" +
+                "        \"fid\": \"Azure-OpenAI\",\n" +
+                "        \"max_tokens\": 32768,\n" +
+                "        \"tags\": \"LLM,CHAT,32K\",\n" +
+                "        \"status\": \"1\",\n" +
+                "        \"id\": \"21e93ff4-f155-4b50-9ecc-6eb1975d6b3e\",\n" +
+                "        \"create_time\": 1720602087869,\n" +
+                "        \"create_date\": \"2024-07-10T17:01:21.401772\",\n" +
+                "        \"update_time\": 1720602087869,\n" +
+                "        \"update_date\": \"2024-07-10T17:01:21.401890\",\n" +
+                "        \"available\": false\n" +
+                "      },\n" +
+                "      {\n" +
+                "        \"llm_name\": \"azure-gpt-4-vision-preview\",\n" +
+                "        \"mdl_type\": \"image2text\",\n" +
+                "        \"fid\": \"Azure-OpenAI\",\n" +
+                "        \"max_tokens\": 765,\n" +
+                "        \"tags\": \"LLM,CHAT,IMAGE2TEXT\",\n" +
+                "        \"status\": \"1\",\n" +
+                "        \"id\": \"103e70b4-8d39-4ee7-8f62-080861f35947\",\n" +
+                "        \"create_time\": 1720602087884,\n" +
+                "        \"create_date\": \"2024-07-10T17:01:21.401772\",\n" +
+                "        \"update_time\": 1720602087884,\n" +
+                "        \"update_date\": \"2024-07-10T17:01:21.401890\",\n" +
+                "        \"available\": false\n" +
+                "      }\n" +
+                "    ],\n" +
+                "    \"Bedrock\": [\n" +
+                "      {\n" +
+                "        \"llm_name\": \"ai21.j2-ultra-v1\",\n" +
+                "        \"mdl_type\": \"chat\",\n" +
+                "        \"fid\": \"Bedrock\",\n" +
+                "        \"max_tokens\": 8191,\n" +
+                "        \"tags\": \"LLM,CHAT,8k\",\n" +
+                "        \"status\": \"1\",\n" +
+                "        \"id\": \"7f74569d-2a5c-4e99-8e73-1dc21c12f3db\",\n" +
+                "        \"create_time\": 1720602087897,\n" +
+                "        \"create_date\": \"2024-07-10T17:01:21.401772\",\n" +
+                "        \"update_time\": 1720602087897,\n" +
+                "        \"update_date\": \"2024-07-10T17:01:21.401890\",\n" +
+                "        \"available\": false\n" +
+                "      },\n" +
+                "      {\n" +
+                "        \"llm_name\": \"ai21.j2-mid-v1\",\n" +
+                "        \"mdl_type\": \"chat\",\n" +
+                "        \"fid\": \"Bedrock\",\n" +
+                "        \"max_tokens\": 8191,\n" +
+                "        \"tags\": \"LLM,CHAT,8k\",\n" +
+                "        \"status\": \"1\",\n" +
+                "        \"id\": \"479ce9a5-1d8d-4bf5-a97d-e1c4a9026eee\",\n" +
+                "        \"create_time\": 1720602087911,\n" +
+                "        \"create_date\": \"2024-07-10T17:01:21.401772\",\n" +
+                "        \"update_time\": 1720602087911,\n" +
+                "        \"update_date\": \"2024-07-10T17:01:21.401890\",\n" +
+                "        \"available\": false\n" +
+                "      },\n" +
+                "      {\n" +
+                "        \"llm_name\": \"cohere.command-text-v14\",\n" +
+                "        \"mdl_type\": \"chat\",\n" +
+                "        \"fid\": \"Bedrock\",\n" +
+                "        \"max_tokens\": 4096,\n" +
+                "        \"tags\": \"LLM,CHAT,4k\",\n" +
+                "        \"status\": \"1\",\n" +
+                "        \"id\": \"8a61b865-e4bd-42a0-bdb3-4159c2e63291\",\n" +
+                "        \"create_time\": 1720602087924,\n" +
+                "        \"create_date\": \"2024-07-10T17:01:21.401772\",\n" +
+                "        \"update_time\": 1720602087924,\n" +
+                "        \"update_date\": \"2024-07-10T17:01:21.401890\",\n" +
+                "        \"available\": false\n" +
+                "      },\n" +
+                "      {\n" +
+                "        \"llm_name\": \"cohere.command-light-text-v14\",\n" +
+                "        \"mdl_type\": \"chat\",\n" +
+                "        \"fid\": \"Bedrock\",\n" +
+                "        \"max_tokens\": 4096,\n" +
+                "        \"tags\": \"LLM,CHAT,4k\",\n" +
+                "        \"status\": \"1\",\n" +
+                "        \"id\": \"e17680fc-0ac6-4ea1-8f1c-5d8066c6b7b9\",\n" +
+                "        \"create_time\": 1720602087938,\n" +
+                "        \"create_date\": \"2024-07-10T17:01:21.401772\",\n" +
+                "        \"update_time\": 1720602087938,\n" +
+                "        \"update_date\": \"2024-07-10T17:01:21.401890\",\n" +
+                "        \"available\": false\n" +
+                "      },\n" +
+                "      {\n" +
+                "        \"llm_name\": \"cohere.command-r-v1:0\",\n" +
+                "        \"mdl_type\": \"chat\",\n" +
+                "        \"fid\": \"Bedrock\",\n" +
+                "        \"max_tokens\": 131072,\n" +
+                "        \"tags\": \"LLM,CHAT,128k\",\n" +
+                "        \"status\": \"1\",\n" +
+                "        \"id\": \"ad4ae215-4cdc-4f78-bcbb-4625bafa0b20\",\n" +
+                "        \"create_time\": 1720602087952,\n" +
+                "        \"create_date\": \"2024-07-10T17:01:21.401772\",\n" +
+                "        \"update_time\": 1720602087952,\n" +
+                "        \"update_date\": \"2024-07-10T17:01:21.401890\",\n" +
+                "        \"available\": false\n" +
+                "      },\n" +
+                "      {\n" +
+                "        \"llm_name\": \"cohere.command-r-plus-v1:0\",\n" +
+                "        \"mdl_type\": \"chat\",\n" +
+                "        \"fid\": \"Bedrock\",\n" +
+                "        \"max_tokens\": 128000,\n" +
+                "        \"tags\": \"LLM,CHAT,128k\",\n" +
+                "        \"status\": \"1\",\n" +
+                "        \"id\": \"03ba3b4b-3406-45e1-8a1f-3be90212c6c0\",\n" +
+                "        \"create_time\": 1720602087965,\n" +
+                "        \"create_date\": \"2024-07-10T17:01:21.401772\",\n" +
+                "        \"update_time\": 1720602087965,\n" +
+                "        \"update_date\": \"2024-07-10T17:01:21.401890\",\n" +
+                "        \"available\": false\n" +
+                "      },\n" +
+                "      {\n" +
+                "        \"llm_name\": \"anthropic.claude-v2\",\n" +
+                "        \"mdl_type\": \"chat\",\n" +
+                "        \"fid\": \"Bedrock\",\n" +
+                "        \"max_tokens\": 102400,\n" +
+                "        \"tags\": \"LLM,CHAT,100k\",\n" +
+                "        \"status\": \"1\",\n" +
+                "        \"id\": \"c0406049-460b-4b3b-b333-4e37e5ee15e7\",\n" +
+                "        \"create_time\": 1720602087979,\n" +
+                "        \"create_date\": \"2024-07-10T17:01:21.401772\",\n" +
+                "        \"update_time\": 1720602087979,\n" +
+                "        \"update_date\": \"2024-07-10T17:01:21.401890\",\n" +
+                "        \"available\": false\n" +
+                "      },\n" +
+                "      {\n" +
+                "        \"llm_name\": \"anthropic.claude-v2:1\",\n" +
+                "        \"mdl_type\": \"chat\",\n" +
+                "        \"fid\": \"Bedrock\",\n" +
+                "        \"max_tokens\": 204800,\n" +
+                "        \"tags\": \"LLM,CHAT,200k\",\n" +
+                "        \"status\": \"1\",\n" +
+                "        \"id\": \"b87d9aa6-f024-4a77-8f4a-fe26a42fb31f\",\n" +
+                "        \"create_time\": 1720602087992,\n" +
+                "        \"create_date\": \"2024-07-10T17:01:21.401772\",\n" +
+                "        \"update_time\": 1720602087992,\n" +
+                "        \"update_date\": \"2024-07-10T17:01:21.401890\",\n" +
+                "        \"available\": false\n" +
+                "      },\n" +
+                "      {\n" +
+                "        \"llm_name\": \"anthropic.claude-3-sonnet-20240229-v1:0\",\n" +
+                "        \"mdl_type\": \"chat\",\n" +
+                "        \"fid\": \"Bedrock\",\n" +
+                "        \"max_tokens\": 204800,\n" +
+                "        \"tags\": \"LLM,CHAT,200k\",\n" +
+                "        \"status\": \"1\",\n" +
+                "        \"id\": \"1a7ef4e6-40a3-4200-8eb5-7be61f106d98\",\n" +
+                "        \"create_time\": 1720602088006,\n" +
+                "        \"create_date\": \"2024-07-10T17:01:21.401772\",\n" +
+                "        \"update_time\": 1720602088006,\n" +
+                "        \"update_date\": \"2024-07-10T17:01:21.401890\",\n" +
+                "        \"available\": false\n" +
+                "      },\n" +
+                "      {\n" +
+                "        \"llm_name\": \"anthropic.claude-3-5-sonnet-20240620-v1:0\",\n" +
+                "        \"mdl_type\": \"chat\",\n" +
+                "        \"fid\": \"Bedrock\",\n" +
+                "        \"max_tokens\": 204800,\n" +
+                "        \"tags\": \"LLM,CHAT,200k\",\n" +
+                "        \"status\": \"1\",\n" +
+                "        \"id\": \"ee38840b-51eb-4bc0-8f25-6b5ef39bb269\",\n" +
+                "        \"create_time\": 1720602088019,\n" +
+                "        \"create_date\": \"2024-07-10T17:01:21.401772\",\n" +
+                "        \"update_time\": 1720602088019,\n" +
+                "        \"update_date\": \"2024-07-10T17:01:21.401890\",\n" +
+                "        \"available\": false\n" +
+                "      },\n" +
+                "      {\n" +
+                "        \"llm_name\": \"anthropic.claude-3-haiku-20240307-v1:0\",\n" +
+                "        \"mdl_type\": \"chat\",\n" +
+                "        \"fid\": \"Bedrock\",\n" +
+                "        \"max_tokens\": 204800,\n" +
+                "        \"tags\": \"LLM,CHAT,200k\",\n" +
+                "        \"status\": \"1\",\n" +
+                "        \"id\": \"f92d1993-f526-45aa-8ae3-676b2912054f\",\n" +
+                "        \"create_time\": 1720602088035,\n" +
+                "        \"create_date\": \"2024-07-10T17:01:21.401772\",\n" +
+                "        \"update_time\": 1720602088035,\n" +
+                "        \"update_date\": \"2024-07-10T17:01:21.401890\",\n" +
+                "        \"available\": false\n" +
+                "      },\n" +
+                "      {\n" +
+                "        \"llm_name\": \"anthropic.claude-3-opus-20240229-v1:0\",\n" +
+                "        \"mdl_type\": \"chat\",\n" +
+                "        \"fid\": \"Bedrock\",\n" +
+                "        \"max_tokens\": 204800,\n" +
+                "        \"tags\": \"LLM,CHAT,200k\",\n" +
+                "        \"status\": \"1\",\n" +
+                "        \"id\": \"e41d998a-b932-40c3-8be6-3521409f181d\",\n" +
+                "        \"create_time\": 1720602088049,\n" +
+                "        \"create_date\": \"2024-07-10T17:01:21.401772\",\n" +
+                "        \"update_time\": 1720602088049,\n" +
+                "        \"update_date\": \"2024-07-10T17:01:21.401890\",\n" +
+                "        \"available\": false\n" +
+                "      },\n" +
+                "      {\n" +
+                "        \"llm_name\": \"anthropic.claude-instant-v1\",\n" +
+                "        \"mdl_type\": \"chat\",\n" +
+                "        \"fid\": \"Bedrock\",\n" +
+                "        \"max_tokens\": 102400,\n" +
+                "        \"tags\": \"LLM,CHAT,100k\",\n" +
+                "        \"status\": \"1\",\n" +
+                "        \"id\": \"ddc733f3-15d6-440e-9343-1f2a4cd63dc1\",\n" +
+                "        \"create_time\": 1720602088062,\n" +
+                "        \"create_date\": \"2024-07-10T17:01:21.401772\",\n" +
+                "        \"update_time\": 1720602088062,\n" +
+                "        \"update_date\": \"2024-07-10T17:01:21.401890\",\n" +
+                "        \"available\": false\n" +
+                "      },\n" +
+                "      {\n" +
+                "        \"llm_name\": \"amazon.titan-text-express-v1\",\n" +
+                "        \"mdl_type\": \"chat\",\n" +
+                "        \"fid\": \"Bedrock\",\n" +
+                "        \"max_tokens\": 8192,\n" +
+                "        \"tags\": \"LLM,CHAT,8k\",\n" +
+                "        \"status\": \"1\",\n" +
+                "        \"id\": \"f9916086-f198-47d4-9eb9-facb678ba0db\",\n" +
+                "        \"create_time\": 1720602088076,\n" +
+                "        \"create_date\": \"2024-07-10T17:01:21.401772\",\n" +
+                "        \"update_time\": 1720602088076,\n" +
+                "        \"update_date\": \"2024-07-10T17:01:21.401890\",\n" +
+                "        \"available\": false\n" +
+                "      },\n" +
+                "      {\n" +
+                "        \"llm_name\": \"amazon.titan-text-premier-v1:0\",\n" +
+                "        \"mdl_type\": \"chat\",\n" +
+                "        \"fid\": \"Bedrock\",\n" +
+                "        \"max_tokens\": 32768,\n" +
+                "        \"tags\": \"LLM,CHAT,32k\",\n" +
+                "        \"status\": \"1\",\n" +
+                "        \"id\": \"2d596b5a-1d6b-4f25-a27e-f9718e65e296\",\n" +
+                "        \"create_time\": 1720602088089,\n" +
+                "        \"create_date\": \"2024-07-10T17:01:21.401772\",\n" +
+                "        \"update_time\": 1720602088089,\n" +
+                "        \"update_date\": \"2024-07-10T17:01:21.401890\",\n" +
+                "        \"available\": false\n" +
+                "      },\n" +
+                "      {\n" +
+                "        \"llm_name\": \"amazon.titan-text-lite-v1\",\n" +
+                "        \"mdl_type\": \"chat\",\n" +
+                "        \"fid\": \"Bedrock\",\n" +
+                "        \"max_tokens\": 4096,\n" +
+                "        \"tags\": \"LLM,CHAT,4k\",\n" +
+                "        \"status\": \"1\",\n" +
+                "        \"id\": \"b117bb63-23db-45d5-a7de-ce80527bf798\",\n" +
+                "        \"create_time\": 1720602088107,\n" +
+                "        \"create_date\": \"2024-07-10T17:01:21.401772\",\n" +
+                "        \"update_time\": 1720602088107,\n" +
+                "        \"update_date\": \"2024-07-10T17:01:21.401890\",\n" +
+                "        \"available\": false\n" +
+                "      },\n" +
+                "      {\n" +
+                "        \"llm_name\": \"meta.llama2-13b-chat-v1\",\n" +
+                "        \"mdl_type\": \"chat\",\n" +
+                "        \"fid\": \"Bedrock\",\n" +
+                "        \"max_tokens\": 4096,\n" +
+                "        \"tags\": \"LLM,CHAT,4k\",\n" +
+                "        \"status\": \"1\",\n" +
+                "        \"id\": \"3f69a570-a7dc-451d-880c-e8a799f88524\",\n" +
+                "        \"create_time\": 1720602088120,\n" +
+                "        \"create_date\": \"2024-07-10T17:01:21.401772\",\n" +
+                "        \"update_time\": 1720602088120,\n" +
+                "        \"update_date\": \"2024-07-10T17:01:21.401890\",\n" +
+                "        \"available\": false\n" +
+                "      },\n" +
+                "      {\n" +
+                "        \"llm_name\": \"meta.llama2-70b-chat-v1\",\n" +
+                "        \"mdl_type\": \"chat\",\n" +
+                "        \"fid\": \"Bedrock\",\n" +
+                "        \"max_tokens\": 4096,\n" +
+                "        \"tags\": \"LLM,CHAT,4k\",\n" +
+                "        \"status\": \"1\",\n" +
+                "        \"id\": \"7acb768e-428d-4277-92af-c99253380021\",\n" +
+                "        \"create_time\": 1720602088135,\n" +
+                "        \"create_date\": \"2024-07-10T17:01:21.401772\",\n" +
+                "        \"update_time\": 1720602088135,\n" +
+                "        \"update_date\": \"2024-07-10T17:01:21.401890\",\n" +
+                "        \"available\": false\n" +
+                "      },\n" +
+                "      {\n" +
+                "        \"llm_name\": \"meta.llama3-8b-instruct-v1:0\",\n" +
+                "        \"mdl_type\": \"chat\",\n" +
+                "        \"fid\": \"Bedrock\",\n" +
+                "        \"max_tokens\": 8192,\n" +
+                "        \"tags\": \"LLM,CHAT,8k\",\n" +
+                "        \"status\": \"1\",\n" +
+                "        \"id\": \"965f56c9-a21f-4b73-bf5e-d78fe2e5ff85\",\n" +
+                "        \"create_time\": 1720602088149,\n" +
+                "        \"create_date\": \"2024-07-10T17:01:21.401772\",\n" +
+                "        \"update_time\": 1720602088149,\n" +
+                "        \"update_date\": \"2024-07-10T17:01:21.401890\",\n" +
+                "        \"available\": false\n" +
+                "      },\n" +
+                "      {\n" +
+                "        \"llm_name\": \"meta.llama3-70b-instruct-v1:0\",\n" +
+                "        \"mdl_type\": \"chat\",\n" +
+                "        \"fid\": \"Bedrock\",\n" +
+                "        \"max_tokens\": 8192,\n" +
+                "        \"tags\": \"LLM,CHAT,8k\",\n" +
+                "        \"status\": \"1\",\n" +
+                "        \"id\": \"1990775f-d7b6-4f1f-a9d9-64cc26e52fba\",\n" +
+                "        \"create_time\": 1720602088162,\n" +
+                "        \"create_date\": \"2024-07-10T17:01:21.401772\",\n" +
+                "        \"update_time\": 1720602088162,\n" +
+                "        \"update_date\": \"2024-07-10T17:01:21.401890\",\n" +
+                "        \"available\": false\n" +
+                "      },\n" +
+                "      {\n" +
+                "        \"llm_name\": \"mistral.mistral-7b-instruct-v0:2\",\n" +
+                "        \"mdl_type\": \"chat\",\n" +
+                "        \"fid\": \"Bedrock\",\n" +
+                "        \"max_tokens\": 8192,\n" +
+                "        \"tags\": \"LLM,CHAT,8k\",\n" +
+                "        \"status\": \"1\",\n" +
+                "        \"id\": \"ed99e317-4293-4d1d-9f4d-6909de6ade85\",\n" +
+                "        \"create_time\": 1720602088176,\n" +
+                "        \"create_date\": \"2024-07-10T17:01:21.401772\",\n" +
+                "        \"update_time\": 1720602088176,\n" +
+                "        \"update_date\": \"2024-07-10T17:01:21.401890\",\n" +
+                "        \"available\": false\n" +
+                "      },\n" +
+                "      {\n" +
+                "        \"llm_name\": \"mistral.mixtral-8x7b-instruct-v0:1\",\n" +
+                "        \"mdl_type\": \"chat\",\n" +
+                "        \"fid\": \"Bedrock\",\n" +
+                "        \"max_tokens\": 4096,\n" +
+                "        \"tags\": \"LLM,CHAT,4k\",\n" +
+                "        \"status\": \"1\",\n" +
+                "        \"id\": \"4f25b25e-d374-43f6-b1de-39282a6746fe\",\n" +
+                "        \"create_time\": 1720602088189,\n" +
+                "        \"create_date\": \"2024-07-10T17:01:21.401772\",\n" +
+                "        \"update_time\": 1720602088189,\n" +
+                "        \"update_date\": \"2024-07-10T17:01:21.401890\",\n" +
+                "        \"available\": false\n" +
+                "      },\n" +
+                "      {\n" +
+                "        \"llm_name\": \"mistral.mistral-large-2402-v1:0\",\n" +
+                "        \"mdl_type\": \"chat\",\n" +
+                "        \"fid\": \"Bedrock\",\n" +
+                "        \"max_tokens\": 8192,\n" +
+                "        \"tags\": \"LLM,CHAT,8k\",\n" +
+                "        \"status\": \"1\",\n" +
+                "        \"id\": \"4400944f-22db-44de-8bf4-98aa5bbc50ce\",\n" +
+                "        \"create_time\": 1720602088203,\n" +
+                "        \"create_date\": \"2024-07-10T17:01:21.401772\",\n" +
+                "        \"update_time\": 1720602088203,\n" +
+                "        \"update_date\": \"2024-07-10T17:01:21.401890\",\n" +
+                "        \"available\": false\n" +
+                "      },\n" +
+                "      {\n" +
+                "        \"llm_name\": \"mistral.mistral-small-2402-v1:0\",\n" +
+                "        \"mdl_type\": \"chat\",\n" +
+                "        \"fid\": \"Bedrock\",\n" +
+                "        \"max_tokens\": 8192,\n" +
+                "        \"tags\": \"LLM,CHAT,8k\",\n" +
+                "        \"status\": \"1\",\n" +
+                "        \"id\": \"13352e38-9926-4941-86cb-d625101588f2\",\n" +
+                "        \"create_time\": 1720602088216,\n" +
+                "        \"create_date\": \"2024-07-10T17:01:21.401772\",\n" +
+                "        \"update_time\": 1720602088216,\n" +
+                "        \"update_date\": \"2024-07-10T17:01:21.401890\",\n" +
+                "        \"available\": false\n" +
+                "      },\n" +
+                "      {\n" +
+                "        \"llm_name\": \"amazon.titan-embed-text-v2:0\",\n" +
+                "        \"mdl_type\": \"embedding\",\n" +
+                "        \"fid\": \"Bedrock\",\n" +
+                "        \"max_tokens\": 8192,\n" +
+                "        \"tags\": \"TEXT EMBEDDING\",\n" +
+                "        \"status\": \"1\",\n" +
+                "        \"id\": \"d8360349-2c65-4f6e-a084-ac263738c001\",\n" +
+                "        \"create_time\": 1720602088230,\n" +
+                "        \"create_date\": \"2024-07-10T17:01:21.401772\",\n" +
+                "        \"update_time\": 1720602088230,\n" +
+                "        \"update_date\": \"2024-07-10T17:01:21.401890\",\n" +
+                "        \"available\": false\n" +
+                "      },\n" +
+                "      {\n" +
+                "        \"llm_name\": \"cohere.embed-english-v3\",\n" +
+                "        \"mdl_type\": \"embedding\",\n" +
+                "        \"fid\": \"Bedrock\",\n" +
+                "        \"max_tokens\": 2048,\n" +
+                "        \"tags\": \"TEXT EMBEDDING\",\n" +
+                "        \"status\": \"1\",\n" +
+                "        \"id\": \"49040a42-7418-446e-9ee3-d0536d826ceb\",\n" +
+                "        \"create_time\": 1720602088243,\n" +
+                "        \"create_date\": \"2024-07-10T17:01:21.401772\",\n" +
+                "        \"update_time\": 1720602088243,\n" +
+                "        \"update_date\": \"2024-07-10T17:01:21.401890\",\n" +
+                "        \"available\": false\n" +
+                "      },\n" +
+                "      {\n" +
+                "        \"llm_name\": \"cohere.embed-multilingual-v3\",\n" +
+                "        \"mdl_type\": \"embedding\",\n" +
+                "        \"fid\": \"Bedrock\",\n" +
+                "        \"max_tokens\": 2048,\n" +
+                "        \"tags\": \"TEXT EMBEDDING\",\n" +
+                "        \"status\": \"1\",\n" +
+                "        \"id\": \"768bfeb0-7503-4930-9c42-feaab207c157\",\n" +
+                "        \"create_time\": 1720602088257,\n" +
+                "        \"create_date\": \"2024-07-10T17:01:21.401772\",\n" +
+                "        \"update_time\": 1720602088257,\n" +
+                "        \"update_date\": \"2024-07-10T17:01:21.401890\",\n" +
+                "        \"available\": false\n" +
+                "      }\n" +
+                "    ]\n" +
+                "  }\n" +
+                "}";
+        List<JsonTreeObject> modelTree = new ArrayList<>();
+        JSONObject jsonObject = JSONObject.parseObject(str);
+        if (jsonObject != null && "0".equals(jsonObject.getString("retcode"))) {
+            JSONObject jsonObjectData = JSONObject.parseObject(jsonObject.getString("data"));
+            for (Map.Entry<String, Object> entry : jsonObjectData.entrySet()) {
+                JsonTreeObject pObject = new JsonTreeObject();
+                List<JsonTreeObject> children = new ArrayList<>();
+                pObject.setId(entry.getKey());
+                pObject.setText(entry.getKey());
+                JSONArray valueArray = JSONArray.parseArray(entry.getValue().toString());
+                if (!valueArray.isEmpty()) {
+                    List<Map> list = valueArray.toJavaList(Map.class);
+                    list.forEach(map -> {
+                        JsonTreeObject cObject = new JsonTreeObject();
+                        cObject.setId(map.get("llm_name") == null ? null : map.get("llm_name").toString());
+                        cObject.setText(map.get("llm_name") == null ? null : map.get("llm_name").toString());
+                        cObject.setPid(map.get("fid") == null ? null : map.get("fid").toString());
+                        children.add(cObject);
+                    });
+                }
+                pObject.setChildren(children);
+                modelTree.add(pObject);
+                //System.out.println("key="+entry.getKey()+"\tvalue="+entry.getValue());
+            }
+
+            System.out.println(JSON.toJSONString(modelTree));
+
+
+//            JSONArray jsonArray = JSONArray.parseArray(jsonObject.getString("data"));
+//            if (!jsonArray.isEmpty()) {
+//                List<Map> list = jsonArray.toJavaList(Map.class);
+//                company = list.stream().map(map -> map.get("name") == null ? null : String.valueOf(map.get("name"))).collect(Collectors.toList());
+//            }
+        }
+    }
  }
