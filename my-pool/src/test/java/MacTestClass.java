@@ -18,6 +18,7 @@ import org.apache.commons.lang3.StringUtils;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
+import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 import org.junit.jupiter.api.Test;
@@ -25,6 +26,7 @@ import org.junit.jupiter.api.Assertions;
 import org.quartz.CronExpression;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import cn.hutool.core.codec.Base64;
 
 public class MacTestClass {
 
@@ -181,8 +183,8 @@ public class MacTestClass {
 //        }
 
         String sql = "SELECT RYJBXX.xb AS xb, round( count(DISTINCT RYJBXX.xh)::numeric*100 / t2.xhzs,2) || '%' as bl from usr_data.t_ryjbxx RYJBXX, (SELECT count(xh) as xhzs from usr_data.t_ryjbxx) t2 GROUP BY RYJBXX.xb, t2.xhzs";
-        String sqlEncode = Base64.getEncoder().encodeToString(URLEncoder.encode(sql).getBytes(StandardCharsets.UTF_8));
-        System.out.println(sqlEncode);
+//        String sqlEncode = Base64.getEncoder().encodeToString(URLEncoder.encode(sql).getBytes(StandardCharsets.UTF_8));
+//        System.out.println(sqlEncode);
 
     }
 
@@ -195,19 +197,35 @@ public class MacTestClass {
 
     @Test
     public void enumClassTest() {
-//        System.out.println(Mode.findById(2)); //CONST
-        List<Animal> a = JSONArray.parseArray("[{\"id\": 1," +
-                "\"nickName\":\"cat\"," +
-                "\"mode\":1}]",Animal.class);
-        for (Animal aa : a){
-            System.out.println(aa);
-            System.out.println(aa.getMode()); //DIM
-            System.out.println("==================");
-//            aa.setMode();
-        }
-        //
-//        Map<Integer, Mode> map = Mode.map;
-//        System.out.println(map); //{2=CONST, 0=DIM, 1=IND, 3=TAG}
+////        System.out.println(Mode.findById(2)); //CONST
+//        List<Animal> a = JSONArray.parseArray("[{\"id\": 1," +
+//                "\"nickName\":\"cat\"," +
+//                "\"mode\":1}]",Animal.class);
+//        for (Animal aa : a){
+//            System.out.println(aa);
+//            System.out.println(aa.getMode()); //DIM
+//            System.out.println("==================");
+////            aa.setMode();
+//        }
+//        //
+////        Map<Integer, Mode> map = Mode.map;
+////        System.out.println(map); //{2=CONST, 0=DIM, 1=IND, 3=TAG}
+
+        /*新转换*/
+        AIChat aiChat = JSONObject.parseObject("{\n" +
+                "            \"conversation_id\": \"122333\",\n" +
+                "                \"messages\": [\n" +
+                "            {\"role\":\"user\",\"content\":\"吃撒撒出\"},\n" +
+                "            {\"role\":\"user\",\"content\":\"吃撒\"},\n" +
+                "            {\"role\":\"user\",\"content\":\"吃撒sa\"}\n" +
+                "  ],\n" +
+                "            \"quote\": false,\n" +
+                "                \"stream\": true\n" +
+                "        }",AIChat.class);
+//        JSONObject.toJSON()
+        System.out.println(JSONArray.toJSON(aiChat.getMessages()).toString());
+
+
 
     }
 
@@ -275,4 +293,75 @@ public class MacTestClass {
 
     }
 
+    @Test
+    public void testBase64() {
+        String str = "U05VI3NqemwyMDIx";
+        String basedecode = Base64.decodeStr(str);
+        System.out.println("basedecode:" + basedecode);
+        String encode = com.gyunf.utils.Base64.encode(basedecode.getBytes());
+        System.out.println("加密："+ encode);
+        String decode = com.gyunf.utils.Base64.decode(encode);
+        System.out.println("解密："+ decode);
+    }
+
+    @Test 
+    public void testBase64Encoder() {
+            
+    List<BusSystem> pageList = Arrays.asList(
+            new BusSystem(1L,"SystemA", 10L, 2L, 3L, 4L,21L,31L,12L),
+            new BusSystem(2L,"SystemB", 20L, 5L, 6L, 7L,21L,31L,12L),
+            new BusSystem(3L,"SystemA", 15L, 3L, 4L, 5L,21L,31L,12L),
+            new BusSystem(4L,"SystemB", 5L, 3L, 4L, 5L,21L,31L,12L),
+            new BusSystem(5L,"SystemB", 1L, 3L, 4L, 5L,21L,31L,12L)
+    );
+
+    Map<String, BusSystemNum> BusSystemNum = aggregateDataByNames(pageList);
+
+    BusSystemNum.forEach((name, data) ->
+            System.out.println("Name: " + name + ", Aggregated Data: " + data));
+    }
+
+    public Map<String, BusSystemNum> aggregateDataByNames(List<BusSystem> pageList) {
+        BiFunction<BusSystemNum, BusSystem, BusSystemNum> accumulator = (acc, bs) -> {
+            acc.integrateDataObject += bs.getIntegrateDataObject();
+            acc.integrateDataField += bs.getIntegrateDataField();
+            acc.integrateDataNum += bs.getIntegrateDataNum();
+            acc.unIntegrateDataObject += bs.getUnIntegrateDataObject();
+            acc.unIntegrateDataField += bs.getUnIntegrateDataField();
+            acc.integrateUnreleaseDataObject += bs.getIntegrateUnreleaseDataObject();
+            acc.integrateUnreleaseDataField += bs.getIntegrateUnreleaseDataField();
+            List<Long> dataBaseWidGroups = acc.dataBaseWidGroups;
+            dataBaseWidGroups.add(bs.getWid());
+            acc.dataBaseWidGroups = dataBaseWidGroups ;
+            return acc;
+        };
+        // 检查pageList是否为空，避免NullPointerException
+        if (pageList == null || pageList.isEmpty()) {
+            return Collections.emptyMap();
+        }
+
+//        return pageList.stream()
+//                .collect(Collectors.groupingBy(
+//                        BusSystem::getName,
+//                        Collectors.reducing(
+//                                new BusSystemNum(), // 创建初始的AggregatedData实例
+//                                (bs) -> {
+//                                    try {
+//                                        return new BusSystemNum(
+//                                                bs.getIntegrateDataField(),
+//                                                bs.getIntegrateDataNum(),
+//                                                bs.getUnIntegrateDataObject(),
+//                                                bs.getUnIntegrateDataField(),
+//                                                bs.getIntegrateUnreleaseDataObject(),
+//                                                bs.getIntegrateUnreleaseDataField(),
+//                                                new ArrayList<>()
+//                                        );
+//                                    } catch (NoSuchFieldException e) {
+//                                        throw new RuntimeException(e);
+//                                    }
+//                                },
+//                                accumulator)
+//                ));
+        return null;
+    }
 }
